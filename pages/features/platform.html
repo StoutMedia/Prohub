@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform | PISA Prohub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header" data-header>
+    <a class="brand" href="../../index.html"><span class="brand-mark">P</span><span><strong>PISA</strong> Prohub</span></a>
+    <button class="nav-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" data-nav-toggle><span></span><span></span><span></span><span class="sr-only">Toggle navigation</span></button>
+    <nav id="primary-navigation" class="primary-nav" data-primary-nav>
+      <a href="../../index.html">Home</a><a href="platform.html" aria-current="page">Platform</a><a href="recruiting.html">Recruiting</a><a href="video-analytics.html">Video & Analytics</a>
+      <div class="nav-dropdown" data-dropdown><button type="button" data-dropdown-toggle aria-expanded="false">Dashboards</button><div class="dropdown-menu"><a href="../dashboards/player.html">Player Dashboard</a><a href="../dashboards/coach.html">Coach Dashboard</a><a href="../dashboards/parent.html">Parent Dashboard</a><a href="../dashboards/admin.html">Director/Admin Dashboard</a></div></div>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero section-pad compact-hero">
+      <p class="eyebrow">Platform Overview</p>
+      <h1>Shared systems for individual development.</h1>
+      <p>Prohub turns scattered training notes, IDP documents, player conversations, and coach observations into a connected development workflow.</p>
+    </section>
+    <section class="section-pad">
+      <div class="timeline-grid">
+        <article class="card"><span class="step">01</span><h3>Assess</h3><p>Capture baseline performance, mindset, technical, tactical, physical, and academic data.</p></article>
+        <article class="card"><span class="step">02</span><h3>Plan</h3><p>Create individual development objectives with clear actions, owners, and review dates.</p></article>
+        <article class="card"><span class="step">03</span><h3>Train</h3><p>Connect daily training journal entries and video notes to long-term IDP targets.</p></article>
+        <article class="card"><span class="step">04</span><h3>Review</h3><p>Use coach check-ins, dashboards, and reports to keep every stakeholder aligned.</p></article>
+      </div>
+    </section>
+    <section class="section-pad split-section">
+      <div class="card dark-card"><h2>IDP tracking model</h2><p>Each plan includes focus areas, success indicators, training assignments, and review history.</p><!-- Backend integration: load IDP records, statuses, and evaluation history from database. --></div>
+      <div class="card"><h2>Reusable components</h2><p>This static page uses repeatable cards, timeline blocks, navigation, modals, and tabs that can map directly to Elementor sections or React components.</p></div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>© 2026 PISA Prohub.</p></footer>
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

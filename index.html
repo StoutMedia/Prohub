@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PISA Prohub is a connected soccer development platform for players, parents, coaches, and directors." />
+  <title>PISA Prohub | Soccer Development Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="PISA Prohub homepage">
+      <span class="brand-mark">P</span>
+      <span><strong>PISA</strong> Prohub</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" data-nav-toggle>
+      <span></span><span></span><span></span>
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+    <nav id="primary-navigation" class="primary-nav" data-primary-nav>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="pages/features/platform.html">Platform</a>
+      <a href="pages/features/recruiting.html">Recruiting</a>
+      <a href="pages/features/video-analytics.html">Video & Analytics</a>
+      <div class="nav-dropdown" data-dropdown>
+        <button type="button" data-dropdown-toggle aria-expanded="false">Dashboards</button>
+        <div class="dropdown-menu">
+          <a href="pages/dashboards/player.html">Player Dashboard</a>
+          <a href="pages/dashboards/coach.html">Coach Dashboard</a>
+          <a href="pages/dashboards/parent.html">Parent Dashboard</a>
+          <a href="pages/dashboards/admin.html">Director/Admin Dashboard</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section-pad">
+      <div class="hero-content">
+        <p class="eyebrow">PISA Prohub Prototype</p>
+        <h1>One premium platform for every step of soccer development.</h1>
+        <p class="hero-copy">Connect player goals, IDP tracking, training journals, coach feedback, recruiting milestones, and video analytics in a responsive hub built for players, parents, coaches, and directors.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#role-entry">Choose your dashboard</a>
+          <a class="btn btn-secondary" href="pages/features/platform.html">Explore platform tools</a>
+        </div>
+      </div>
+      <aside class="hero-panel card glow-card" aria-label="Platform snapshot">
+        <div class="metric-row"><span>Active IDPs</span><strong>248</strong></div>
+        <div class="metric-row"><span>Recruiting Profiles</span><strong>76</strong></div>
+        <div class="metric-row"><span>Training Entries</span><strong>1.8k</strong></div>
+        <div class="progress-shell"><span style="width: 82%"></span></div>
+        <p>Development completion across current PISA cohorts.</p>
+      </aside>
+    </section>
+
+    <section class="section-pad feature-grid-section" aria-labelledby="platform-pillars">
+      <div class="section-heading">
+        <p class="eyebrow">Development Ecosystem</p>
+        <h2 id="platform-pillars">Everything needed to track growth and compete with purpose.</h2>
+      </div>
+      <div class="card-grid six-grid">
+        <article class="card feature-card accent-orange">
+          <span class="card-icon">⚽</span>
+          <h3>Player Development</h3>
+          <p>Connect goals, evaluations, habits, and training plans so each athlete understands the next best step.</p>
+        </article>
+        <article class="card feature-card accent-blue">
+          <span class="card-icon">📈</span>
+          <h3>IDP Tracking</h3>
+          <p>Individual Development Plans organize objectives, coach notes, progress markers, and action items.</p>
+        </article>
+        <article class="card feature-card accent-green">
+          <span class="card-icon">🎓</span>
+          <h3>Recruiting Support</h3>
+          <p>Keep academics, highlight links, target schools, outreach, and timeline milestones in one place.</p>
+        </article>
+        <article class="card feature-card accent-purple">
+          <span class="card-icon">📝</span>
+          <h3>Training Journal</h3>
+          <p>Players reflect after sessions, record workload, and build self-awareness with consistent journaling.</p>
+        </article>
+        <article class="card feature-card accent-red">
+          <span class="card-icon">🧠</span>
+          <h3>Coach Tools</h3>
+          <p>Coaches review rosters, plan feedback, assign focus areas, and monitor athlete development signals.</p>
+        </article>
+        <article class="card feature-card accent-white">
+          <span class="card-icon">🎥</span>
+          <h3>Video/Analytics Library</h3>
+          <p>Tag film, track match actions, and build evidence-based reviews for players and teams.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="role-entry" class="section-pad split-section">
+      <div>
+        <p class="eyebrow">Role Entry</p>
+        <h2>Jump into the experience designed for you.</h2>
+        <p>Use the selector below to preview role-based pathways. Future authentication can route each user to the correct dashboard after login.</p>
+        <!-- Backend integration: replace this static selector with authenticated role-based routing. -->
+        <form class="role-selector card" data-role-selector>
+          <label for="role">I am a...</label>
+          <select id="role" name="role" data-role-select>
+            <option value="pages/dashboards/player.html">Player</option>
+            <option value="pages/dashboards/coach.html">Coach</option>
+            <option value="pages/dashboards/parent.html">Parent</option>
+            <option value="pages/dashboards/admin.html">Director/Admin</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Open dashboard</button>
+        </form>
+      </div>
+      <div class="card dark-card">
+        <h3>Prototype-ready today. Platform-ready tomorrow.</h3>
+        <ul class="check-list">
+          <li>Shared navigation and reusable sections</li>
+          <li>Responsive card layouts for mobile and desktop</li>
+          <li>Clear places for backend/API integration</li>
+          <li>Portable markup for WordPress/Elementor or React conversion</li>
+        </ul>
+        <button class="text-button" data-modal-open="roadmap-modal">View build roadmap</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="roadmap-modal" role="dialog" aria-modal="true" aria-labelledby="roadmap-title" hidden>
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close modal">×</button>
+      <p class="eyebrow">Next Phase</p>
+      <h2 id="roadmap-title">Backend integration roadmap</h2>
+      <p>Connect authentication, user roles, IDP records, video storage, recruiting CRM fields, and coach feedback APIs when the prototype moves into a production stack.</p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 PISA Prohub. Built as a static prototype for future CMS or React migration.</p>
+  </footer>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
