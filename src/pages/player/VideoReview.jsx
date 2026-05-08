@@ -1,0 +1,4 @@
+import Card from '../../components/ui/Card.jsx';
+import Badge from '../../components/ui/Badge.jsx';
+import { videoReviews } from '../../data/mockReports.js';
+export default function VideoReview(){return <div className="page-stack"><div className="dashboard-title"><p className="eyebrow">Video Review</p><h1>Turn film into evidence-based feedback.</h1></div><div className="dashboard-grid">{videoReviews.map(video=><Card key={video.title}><div className="video-shell"><div className="play-button">▶</div></div><h2>{video.title}</h2><p><strong>Coach notes:</strong> {video.note}</p><p><strong>Key learning point:</strong> {video.learning}</p><p><strong>Player reflection:</strong> {video.reflection}</p><div className="tag-list">{video.tags.map(tag=><Badge key={tag}>{tag}</Badge>)}</div></Card>)}</div></div>}

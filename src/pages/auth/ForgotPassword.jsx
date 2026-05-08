@@ -1,0 +1,2 @@
+import { Link } from 'react-router-dom';
+export default function ForgotPassword(){return <main className="auth-page single"><section className="auth-form card"><h1>Reset password</h1><p>Enter your email and we will prepare a password reset flow when backend auth is connected.</p><label>Email<input type="email" placeholder="you@domain.com" /></label><Link className="btn btn-primary" to="/login">Back to login</Link></section></main>}
