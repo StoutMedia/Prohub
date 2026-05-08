@@ -1,66 +1,66 @@
-# PISA Prohub Static Prototype
+# PISA ProHub React SaaS Prototype
 
-PISA Prohub is a responsive static web app prototype for a premium soccer development platform serving players, parents, coaches, and directors/admins.
+PISA ProHub is a responsive front-end SaaS prototype for Protouch International Soccer Academy. It connects players, parents, coaches, directors, and recruiters into one soccer development ecosystem.
 
-## What is included
+## What changed
 
-- `index.html` — homepage with platform positioning, feature pillars, role selector, and roadmap modal.
-- `pages/features/platform.html` — platform and IDP workflow overview.
-- `pages/features/recruiting.html` — recruiting support and sample recruiting board.
-- `pages/features/video-analytics.html` — video/analytics library concept page.
-- `pages/dashboards/player.html` — player dashboard with IDP, journal, and film tabs.
-- `pages/dashboards/coach.html` — coach dashboard with roster, feedback, and session tabs.
-- `pages/dashboards/parent.html` — parent dashboard entry point.
-- `pages/dashboards/admin.html` — director/admin dashboard entry point.
-- `assets/css/styles.css` — global responsive styles, brand colors, cards, navigation, tabs, tables, and modal styling.
-- `assets/js/app.js` — global interactions for the mobile menu, dashboard dropdown, login role selector, tabs, and modals.
+The original static HTML/CSS/JS prototype has been migrated into a routed React application using a Vite-style project structure. The React app preserves the dark premium sports-tech direction, PISA orange (`#E47410`) accent system, rounded glass cards, dashboard side navigation, mobile navigation, responsive tables, tabs, mock login role routing, and soccer-specific content from the existing pages.
 
-## Brand direction
+## Current structure
 
-The prototype uses a dark premium sports look with PISA orange (`#E47410`) as the primary accent. Supporting colors include white, black, blue, green, red, and purple for status, feature grouping, and dashboard emphasis.
+```text
+src/
+  components/
+    layout/          Shared Header, Sidebar, DashboardLayout, Footer
+    ui/              Button, Card, Badge, StatCard, ProgressBar, Modal, Tabs
+    dashboard/       Player snapshot, training, IDP, recruiting, journal, review widgets
+    navigation/      RoleSwitcher and MobileNav
+  pages/
+    marketing/       Home, Programs, SummerTraining, Pricing, About, Contact, recruiting, player development, coaches
+    auth/            Login, Register, ForgotPassword
+    dashboards/      Player, Parent, Coach, Director, Recruiter/Admin dashboards
+    player/          DevelopmentPlan, TrainingPlan, Journal, Recruiting, VideoReview, Profile
+    coach/           TeamOverview, SessionPlanner, PlayerReports, GameModel
+    director/        ClubOverview, StaffManagement, PlayerPathway, Reports
+  data/              Mock users, players, training, recruiting, reports
+  routes/            AppRoutes
+  styles/            Global responsive styles
+```
 
 ## Running locally
 
-Open `index.html` directly in a browser, or serve the folder with a simple static server:
+Install dependencies and start Vite:
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:8000`.
+Then open the local URL shown by Vite, usually `http://localhost:5173`.
 
-## Future backend integration points
+> Note: this environment blocked registry access while attempting `npm install`, so dependencies may need to be installed in a normal local development environment.
 
-HTML and JavaScript comments mark areas intended for future production wiring, including:
+## Key routes
 
-- Authenticated role-based routing after login.
-- IDP records, progress history, and evaluation data.
-- Player training journal persistence.
-- Coach feedback submissions and notifications.
-- Recruiting CRM records and college outreach data.
-- Cloud video storage, clip tagging, and analytics events.
-- Admin user management and permission APIs.
+- `/` — SaaS marketing homepage
+- `/programs`, `/summer-training`, `/recruiting`, `/player-development`, `/coaches`, `/pricing`, `/about`, `/contact`
+- `/login` — mock role-based login
+- `/app/player`, `/app/parent`, `/app/coach`, `/app/director`, `/app/recruiter`
+- `/app/development-plan`, `/app/training`, `/app/journal`, `/app/recruiting`, `/app/video-review`, `/app/reports`, `/app/profile`
+- `/app/session-planner`, `/app/game-model`, `/app/staff-management`, `/app/player-pathway`
 
-## WordPress/Elementor or React migration notes
+## Assumptions
 
-The app is intentionally organized around reusable sections and components:
-
-- Header/navigation
-- Hero blocks
-- Feature cards
-- Metric cards
-- Timeline cards
-- Dashboard tabs
-- Responsive tables
-- Modals
-
-For WordPress/Elementor, each section can be rebuilt as a reusable template or global widget. For React, the repeated markup can become components such as `Header`, `Card`, `DashboardTabs`, `RoleSelector`, `Modal`, and `MetricCard`.
+- No backend is connected yet; all data lives in `src/data` mock modules.
+- Role login is a client-side redirect only.
+- Payment, authentication, permissions, video storage, and recruiting CRM records are placeholders for future services.
+- The app uses custom CSS to preserve the existing design direction; Tailwind can be added later when package installation is available.
 
 ## Recommended next steps
 
-1. Replace repeated static headers with a server-side include, Elementor global header, or React component.
-2. Add real authentication and role permissions.
-3. Define the data model for players, teams, IDPs, journals, recruiting profiles, clips, and feedback.
-4. Connect dashboards to APIs and CMS-managed content.
-5. Add automated HTML validation, accessibility checks, and visual regression tests.
-6. Add real PISA brand assets, photography, and approved copy.
+1. Add production authentication with role/permission claims.
+2. Model database tables for players, teams, IDPs, journals, sessions, videos, reports, recruiting schools, and communications.
+3. Connect payments/subscriptions with Stripe or a comparable provider.
+4. Add cloud video storage and clip tagging.
+5. Add API-backed coach feedback, player reports, and director oversight dashboards.
+6. Add automated tests, accessibility checks, and visual regression coverage.

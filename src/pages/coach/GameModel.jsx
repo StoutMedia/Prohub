@@ -1,0 +1,2 @@
+import Card from '../../components/ui/Card.jsx';
+export default function GameModel(){return <div className="page-stack"><div className="dashboard-title"><p className="eyebrow">Game Model</p><h1>Possession with Purpose to Attack</h1></div><div className="card-grid three-grid">{['Build Up','Create & Exploit Space','Final Third','Counterpressing','Rest Defense','Set Plays'].map(item=><Card key={item}><h2>{item}</h2><p>Principles, behaviors, prompts, and interventions connected to session plans.</p></Card>)}</div></div>}
