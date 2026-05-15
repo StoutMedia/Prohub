@@ -1,4 +1,7 @@
-import PlayerSnapshot from '../../components/dashboard/PlayerSnapshot.jsx';
+import { useState } from 'react';
 import Card from '../../components/ui/Card.jsx';
-import { players } from '../../data/mockPlayers.js';
-export default function Profile(){return <div className="page-stack"><PlayerSnapshot player={players[0]}/><Card><h2>Settings</h2><p>Profile fields, notifications, family connections, and privacy controls are ready for backend integration.</p></Card></div>}
+import { playerProfile } from '../../data/pisaData.js';
+const fields = [
+  ['name','Name'], ['age','Age'], ['graduationYear','Graduation year'], ['position','Position'], ['secondaryPosition','Secondary position'], ['dominantFoot','Dominant foot'], ['height','Height'], ['weight','Weight'], ['club','Club'], ['team','Team'], ['school','School'], ['gpa','GPA'], ['targetCollegeLevel','Target college level'], ['strengths','Strengths'], ['developmentNeeds','Development needs'], ['shortTermGoals','Short-term goals'], ['longTermGoals','Long-term goals'], ['highlightVideoLink','Highlight video link']
+];
+export default function Profile(){const [profile,setProfile]=useState(playerProfile);return <div className="page-stack"><div className="dashboard-title"><p className="eyebrow">Player Profile Builder</p><h1>Build a recruiting-ready player profile.</h1><p>All MVP fields are captured here and ready to save to a real player_profiles table.</p></div><Card><form className="form-grid" onSubmit={(e)=>e.preventDefault()}>{fields.map(([key,label])=>{const long=['strengths','developmentNeeds','shortTermGoals','longTermGoals'].includes(key);return <label key={key} className={long?'form-span':''}>{label}{long?<textarea value={profile[key]} onChange={(e)=>setProfile({...profile,[key]:e.target.value})}/>:<input value={profile[key]} onChange={(e)=>setProfile({...profile,[key]:e.target.value})}/>}</label>})}<button className="btn btn-primary">Save profile placeholder</button></form></Card></div>}
