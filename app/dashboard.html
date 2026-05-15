@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | ProHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body class="app-body" data-root-path=".." data-protected="true" data-page="dashboard">
+  <div class="app-shell">
+    <aside class="app-sidebar" data-sidebar>
+      <a class="brand" href="dashboard.html"><span class="brand-mark">P</span><span><strong>ProHub</strong></span></a>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" aria-current="page">🏠 Dashboard</a>
+        <a href="session-builder.html">⚽ Session Builder</a>
+        <a href="dashboard.html#players">👥 Players & Teams</a>
+        <a href="dashboard.html#idps">📋 IDPs</a>
+        <a href="dashboard.html#recruiting">🎓 Recruiting</a>
+        <a href="dashboard.html#video">🎥 Video Library</a>
+        <button type="button" data-modal-open="note-modal">📝 New Development Note</button>
+      </nav>
+      <div class="card"><p class="eyebrow">Signed in as</p><strong data-user-name>Demo User</strong><p data-user-role>Coach</p><button class="btn btn-secondary btn-small" data-logout>Logout</button></div>
+    </aside>
+    <main class="app-main">
+      <header class="app-topbar"><button class="sidebar-toggle" data-sidebar-toggle aria-label="Toggle sidebar"><span></span><span></span><span></span></button><div><strong>ProHub App</strong><p class="help-text">Protected front-end shell</p></div><a class="btn btn-primary btn-small" href="session-builder.html">New session</a></header>
+      <div class="app-content" data-dashboard></div>
+    </main>
+  </div>
+  <div class="modal" id="note-modal" hidden>
+    <div class="modal-card"><button class="modal-close" data-modal-close aria-label="Close">×</button><h2>Add development note</h2><form class="auth-form" data-validate data-save-form="development-note"><label class="form-field">Player<input name="player" required placeholder="Jordan Rivera" /><span class="form-error">Player is required.</span></label><label class="form-field">Note<textarea name="note" required placeholder="Write coaching observation..."></textarea><span class="form-error">Note is required.</span></label><button class="btn btn-primary" type="submit">Save note</button><p class="notice" data-save-state></p></form></div>
+  </div>
+  <script type="module" src="../assets/js/app.js"></script>
+</body>
+</html>

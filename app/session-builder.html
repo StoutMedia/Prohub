@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Builder | ProHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body class="app-body" data-root-path=".." data-protected="true" data-page="session-builder">
+  <div class="app-shell">
+    <aside class="app-sidebar" data-sidebar>
+      <a class="brand" href="dashboard.html"><span class="brand-mark">P</span><span><strong>ProHub</strong></span></a>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="session-builder.html" aria-current="page">⚽ Session Builder</a>
+        <a href="dashboard.html#players">👥 Players & Teams</a>
+        <a href="dashboard.html#idps">📋 IDPs</a>
+        <a href="dashboard.html#recruiting">🎓 Recruiting</a>
+        <a href="dashboard.html#video">🎥 Video Library</a>
+      </nav>
+      <div class="card"><p class="eyebrow">Demo save state</p><p>Sessions are saved to localStorage. A database insert will replace this later.</p><button class="btn btn-secondary btn-small" data-logout>Logout</button></div>
+    </aside>
+    <main class="app-main">
+      <header class="app-topbar"><button class="sidebar-toggle" data-sidebar-toggle aria-label="Toggle sidebar"><span></span><span></span><span></span></button><div><strong>Session Builder</strong><p class="help-text">Plan, validate, and save training sessions</p></div><a class="btn btn-secondary btn-small" href="dashboard.html">Back to dashboard</a></header>
+      <div class="app-content">
+        <div class="breadcrumbs"><a href="../index.html">Home</a><span>/</span><a href="dashboard.html">App</a><span>/</span><span>Session Builder</span></div>
+        <section class="dashboard-hero"><div><p class="eyebrow">Training plan workflow</p><h1>Build a session with outcomes and constraints.</h1><p>Use this form for a realistic SaaS demo. It validates required fields and stores drafts locally until Supabase is connected.</p></div><button class="btn btn-secondary" data-modal-open="ai-modal">AI session idea</button></section>
+        <section class="card-grid two-grid">
+          <form class="card auth-form" data-validate data-save-form="session-plan">
+            <h2>Session details</h2>
+            <div class="form-grid">
+              <label class="form-field full">Session title<input name="title" required placeholder="U17 Pressing Triggers" /><span class="form-error">Title is required.</span></label>
+              <label class="form-field">Team<select name="team" required><option value="">Select team</option><option>U17 Elite</option><option>U16 Academy</option><option>U15 Girls</option></select><span class="form-error">Team is required.</span></label>
+              <label class="form-field">Date<input type="date" name="date" required /><span class="form-error">Date is required.</span></label>
+              <label class="form-field">Phase<select name="phase" required><option value="">Select phase</option><option>Attacking</option><option>Defending</option><option>Transition</option><option>Set pieces</option></select><span class="form-error">Phase is required.</span></label>
+              <label class="form-field">Duration<input type="number" name="duration" min="15" required placeholder="90" /><span class="form-error">Duration is required.</span></label>
+              <label class="form-field full">Learning objective<textarea name="objective" required placeholder="Players identify pressing trigger, angle run, and lock play wide..."></textarea><span class="form-error">Objective is required.</span></label>
+              <label class="form-field full">Activities<textarea name="activities" required placeholder="Activation rondo, positional game, phase of play, conditioned game..."></textarea><span class="form-error">Activities are required.</span></label>
+              <label class="form-field full">Equipment<input name="equipment" required placeholder="Balls, cones, bibs, mini goals, GPS" /><span class="form-error">Equipment is required.</span></label>
+            </div>
+            <button class="btn btn-primary" type="submit">Save session plan</button><p class="notice" data-save-state></p>
+          </form>
+          <aside class="card">
+            <h2>Planning checklist</h2>
+            <ul class="check-list"><li>Connect every activity to an IDP theme</li><li>Add constraints and coaching points</li><li>Assign video clips after training</li><li>Tag players for follow-up notes</li><li>Future AI integration can generate progressions</li></ul>
+            <div class="tabs" data-tabs><div class="tab-list"><button type="button" data-tab="idp" aria-selected="true">IDP</button><button type="button" data-tab="video" aria-selected="false">Video</button><button type="button" data-tab="recruiting" aria-selected="false">Recruiting</button></div><section class="tab-panel active" data-panel="idp"><p>Attach session themes to player goals such as scanning, first touch, pressing, or finishing.</p></section><section class="tab-panel" data-panel="video"><p>After upload, clips can be tagged to objectives and shared with players.</p></section><section class="tab-panel" data-panel="recruiting"><p>Key training evidence can support player profiles and parent updates.</p></section></div>
+          </aside>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="modal" id="ai-modal" hidden><div class="modal-card"><button class="modal-close" data-modal-close>×</button><h2>AI coaching placeholder</h2><p>Future AI API integration: send team, age group, phase, IDP goals, and constraints to generate session progressions and coaching language.</p><button class="btn btn-primary" data-modal-close>Got it</button></div></div>
+  <script type="module" src="../assets/js/app.js"></script>
+</body>
+</html>
