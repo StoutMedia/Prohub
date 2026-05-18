@@ -9,22 +9,26 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body data-root-path=".">
-  <main class="auth-shell">
-    <section class="auth-panel dark-card">
-      <a class="brand" href="index.html"><span class="brand-mark">P</span><span><strong>ProHub</strong></span></a>
-      <div class="page-hero" style="margin-top:3rem"><p class="eyebrow">Welcome back</p><h1>Sign in to your soccer development workspace.</h1><p>Choose a demo role to route into the correct protected dashboard. This placeholder auth flow uses localStorage until Supabase Auth is added.</p></div>
-      <div class="button-row"><a class="btn btn-secondary" href="index.html">Back to site</a><a class="btn btn-secondary" href="signup.html">Create account</a></div>
+  <main class="auth-shell prohub-auth-static">
+    <section class="auth-panel auth-left-panel">
+      <a class="brand auth-wordmark" href="index.html"><span class="brand-mark">P</span><span><strong>PROHUB</strong></span></a>
+      <div class="page-hero auth-hero-copy"><p class="eyebrow">Welcome back</p><h1>PROHUB</h1><h2>Sign in to your soccer development workspace.</h2><p>Choose a role to continue into the correct ProHub dashboard.</p></div>
+      <div class="auth-feature-list"><span>Player pathways</span><span>Parent reporting</span><span>Coach invites</span></div>
+      <div class="secure-login-badge">🔒 Secure login</div>
     </section>
-    <section class="auth-panel">
-      <form class="card auth-form" data-validate data-auth="login">
-        <h2>Login</h2>
+    <section class="auth-panel auth-right-panel">
+      <form class="card auth-form prohub-static-card" data-validate data-auth="login">
+        <p class="eyebrow">Login</p>
+        <h2>Log in to ProHub.</h2>
         <label class="form-field">Email<input type="email" name="email" value="coach@prohub.test" required /><span class="form-error">Enter a valid email address.</span></label>
         <label class="form-field">Password<input type="password" name="password" value="prohub" minlength="6" required /><span class="form-error">Password must be at least 6 characters.</span></label>
         <label class="form-field">Demo role<select name="role" required><option value="coach">Coach</option><option value="player">Player</option><option value="director">Director / Club Admin</option><option value="parent">Parent</option></select><span class="form-error">Choose a role.</span></label>
         <button class="btn btn-primary" type="submit">Login to dashboard</button>
+        <a class="btn btn-secondary" href="signup.html">Create account</a>
         <p class="help-text">Future backend integration: replace this with Supabase Auth session handling, password reset, and organization memberships.</p>
       </form>
     </section>
+    <a class="support-link" href="mailto:support@prohub.com">Support</a>
   </main>
   <script type="module" src="assets/js/app.js"></script>
   <script>const role = new URLSearchParams(location.search).get('role'); if (role) document.querySelector('[name="role"]').value = role;</script>
