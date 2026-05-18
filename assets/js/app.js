@@ -80,10 +80,103 @@ document.querySelectorAll('[data-sidebar-toggle]').forEach((toggle) => {
   toggle.addEventListener('click', () => sidebar?.classList.toggle('open'));
 });
 
+
+const parentPlayerPlans = [
+  { name: 'Starter', audience: 'Parent / Player', price: '$19', cadence: '/mo', description: 'Profile, training workspace, and monthly progress reporting.' },
+  { name: 'Pro', audience: 'Parent / Player', price: '$49', cadence: '/mo', description: 'Adds development plan tools, film notes, and recruiting CRM.' },
+  { name: 'Elite', audience: 'Parent / Player', price: '$99', cadence: '/mo', description: 'Coach-supported pathway with expanded parent reporting.' },
+];
+const organizationPlans = [
+  { name: 'Team', audience: 'Organization', price: '$299', cadence: '/mo', description: 'One team workspace with player plans and coach reporting.' },
+  { name: 'Club', audience: 'Organization', price: '$799', cadence: '/mo', description: 'Multi-team oversight, staff seats, and pathway dashboards.' },
+  { name: 'Academy', audience: 'Organization', price: 'Custom', cadence: '', description: 'Advanced license support for academies and larger programs.' },
+];
+let pendingSignupSession = null;
+let resendSeconds = 30;
+let resendTimer = null;
+const selectedSignupRole = () => document.querySelector('[data-auth="signup"] [name="role"]:checked')?.value || 'player';
+const openPrototypeModal = (modal) => {
+  if (!modal) return;
+  modal.hidden = false;
+  modal.querySelector('input, button')?.focus();
+};
+const closePrototypeModal = (modal) => { if (modal) modal.hidden = true; };
+const setInviteVisibility = () => {
+  const invited = selectedSignupRole() === 'invited-coach';
+  document.querySelector('[data-invite-note]')?.toggleAttribute('hidden', !invited);
+  const inviteField = document.querySelector('[data-invite-field]');
+  inviteField?.toggleAttribute('hidden', !invited);
+  inviteField?.querySelector('input')?.toggleAttribute('required', invited);
+};
+const renderBillingCards = (role) => {
+  const cards = document.querySelector('[data-billing-cards]');
+  if (!cards) return;
+  const isCoach = role === 'coach';
+  const plans = isCoach ? organizationPlans : parentPlayerPlans;
+  document.querySelector('[data-billing-title]').textContent = isCoach ? 'Choose an organization license' : 'Choose a parent or player plan';
+  document.querySelector('[data-billing-copy]').textContent = isCoach ? 'Organization tiers are separate from individual parent and player memberships.' : 'Parent and player tiers stay separate from organization licenses.';
+  cards.innerHTML = plans.map((plan) => `<article class="billing-card"><p class="billing-audience">${plan.audience}</p><h3>${plan.name}</h3><p class="billing-price"><strong>${plan.price}</strong>${plan.cadence ? `<span>${plan.cadence}</span>` : ''}</p><small>${plan.description}</small><button class="outline-prohub-button" type="button">Select</button></article>`).join('');
+};
+const startResendCooldown = () => {
+  const button = document.querySelector('[data-resend-code]');
+  if (!button) return;
+  resendSeconds = 30;
+  button.disabled = true;
+  button.textContent = `Resend code in ${resendSeconds}s`;
+  window.clearInterval(resendTimer);
+  resendTimer = window.setInterval(() => {
+    resendSeconds -= 1;
+    if (resendSeconds <= 0) {
+      window.clearInterval(resendTimer);
+      button.disabled = false;
+      button.textContent = 'Resend code';
+      return;
+    }
+    button.textContent = `Resend code in ${resendSeconds}s`;
+  }, 1000);
+};
+const showVerifyError = (state) => {
+  const error = document.querySelector('[data-verify-error]');
+  const inputs = document.querySelectorAll('.verification-boxes input');
+  inputs.forEach((input) => input.classList.toggle('code-error', Boolean(state)));
+  if (!error) return;
+  error.hidden = !state;
+  error.textContent = state === 'expired' ? 'This code expired. Resend a new code to continue.' : 'Invalid code. Check the six digits and try again.';
+};
+document.querySelectorAll('[data-auth="signup"] [name="role"]').forEach((input) => input.addEventListener('change', setInviteVisibility));
+setInviteVisibility();
+document.querySelectorAll('.verification-boxes input').forEach((input, index, list) => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/\D/g, '').slice(-1);
+    showVerifyError('');
+    if (input.value && index < list.length - 1) list[index + 1].focus();
+  });
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Backspace' && !input.value && index > 0) list[index - 1].focus();
+  });
+});
+document.querySelectorAll('[data-verify-state]').forEach((button) => button.addEventListener('click', () => showVerifyError(button.dataset.verifyState)));
+document.querySelector('[data-resend-code]')?.addEventListener('click', startResendCooldown);
+document.querySelector('[data-verify-continue]')?.addEventListener('click', () => {
+  closePrototypeModal(document.getElementById('verify-modal'));
+  if (!pendingSignupSession) return;
+  if (pendingSignupSession.role === 'invited-coach') {
+    setSession({ ...pendingSignupSession, role: 'coach' });
+    window.location.href = appUrl('dashboard.html');
+    return;
+  }
+  renderBillingCards(pendingSignupSession.role);
+  openPrototypeModal(document.getElementById('billing-modal'));
+});
+document.querySelector('[data-billing-continue]')?.addEventListener('click', () => {
+  if (pendingSignupSession) setSession({ ...pendingSignupSession, role: pendingSignupSession.role === 'invited-coach' ? 'coach' : pendingSignupSession.role });
+  window.location.href = appUrl('dashboard.html');
+});
+
 const validateForm = (form) => {
   let valid = true;
   form.querySelectorAll('[required]').forEach((field) => {
-    const wrapper = field.closest('.form-field') || field.parentElement;
+    const wrapper = field.closest('.form-field') || field.closest('.prohub-field') || field.parentElement;
     const empty = !String(field.value || '').trim();
     const emailInvalid = field.type === 'email' && field.value && !field.checkValidity();
     const shortPassword = field.name === 'password' && field.value.length < 6;
@@ -114,13 +207,15 @@ document.querySelectorAll('[data-validate]').forEach((form) => {
     }
     if (form.dataset.auth === 'signup') {
       event.preventDefault();
-      const role = form.querySelector('[name="role"]')?.value || 'coach';
+      const role = form.querySelector('[name="role"]:checked')?.value || form.querySelector('[name="role"]')?.value || 'player';
       const name = form.querySelector('[name="name"]')?.value || 'ProHub User';
       const email = form.querySelector('[name="email"]')?.value;
       // Future backend integration: create Supabase auth user, profile row, and role membership here.
       // Future Stripe integration: start checkout or attach trial subscription after account creation.
-      setSession({ name, email, role });
-      window.location.href = appUrl('dashboard.html');
+      pendingSignupSession = { name, email, role };
+      showVerifyError('');
+      startResendCooldown();
+      openPrototypeModal(document.getElementById('verify-modal'));
     }
     if (form.dataset.saveForm) {
       event.preventDefault();

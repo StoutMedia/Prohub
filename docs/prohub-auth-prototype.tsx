@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import stadiumImage from '../../assets/prohub-stadium.svg';
+import stadiumImage from '../src/assets/prohub-stadium.svg';
 
 const flows = [
   { id: 'player', label: 'Player', path: '/app/player', headline: 'Train smarter, track development, and keep every next step clear.' },
@@ -21,16 +21,12 @@ const organizationPlans = [
   { id: 'academy', name: 'Academy', audience: 'Organization', price: 'Custom', cadence: '', description: 'Advanced license support for academies and larger programs.' },
 ];
 
-function FieldIcon({ children }) {
-  return <span className="prohub-field-icon" aria-hidden="true">{children}</span>;
-}
-
 function AuthInput({ icon, id, label, ...props }) {
   return <label className="prohub-field" htmlFor={id}>
     <span>{label}</span>
     <span className="prohub-input-wrap">
-      <input id={id} {...props} />
-      <FieldIcon>{icon}</FieldIcon>
+      <input className="h-[51px] w-full rounded-md border border-neutral-700 bg-transparent px-4 pr-14 text-[16px]" id={id} {...props} />
+      <span className="prohub-field-icon" aria-hidden="true">{icon}</span>
     </span>
   </label>;
 }
@@ -50,22 +46,17 @@ function VerificationBoxes({ status, setStatus }) {
     if (nextValue && index < refs.current.length - 1) refs.current[index + 1]?.focus();
   }
 
-  function handleKeyDown(index, event) {
-    if (event.key === 'Backspace' && !digits[index] && index > 0) refs.current[index - 1]?.focus();
-  }
-
   return <div>
     <div className="verification-boxes" aria-label="Email verification code">
       {digits.map((digit, index) => <input
         key={index}
         ref={(node) => { refs.current[index] = node; }}
         aria-label={`Digit ${index + 1}`}
-        className={invalid || expired ? 'code-error' : ''}
+        className={`h-[80px] w-[60px] rounded-md border bg-transparent text-center text-[30px] font-black ${invalid || expired ? 'code-error' : ''}`}
         inputMode="numeric"
         maxLength="1"
         value={digit}
         onChange={(event) => updateDigit(index, event.target.value)}
-        onKeyDown={(event) => handleKeyDown(index, event)}
       />)}
     </div>
     {invalid && <p className="verify-error">Invalid code. Check the six digits and try again.</p>}
@@ -84,13 +75,6 @@ function AuthBrandPanel() {
       <p>One connected platform for soccer players, parents, coaches, and organizations to manage development from first session to next opportunity.</p>
     </div>
   </section>;
-}
-
-function BottomChrome() {
-  return <>
-    <div className="secure-login-badge">Secure encrypted login</div>
-    <a className="support-link" href="mailto:support@prohub.com">Contact Support</a>
-  </>;
 }
 
 function EmailVerificationModal({ onClose, onContinue }) {
@@ -113,8 +97,8 @@ function EmailVerificationModal({ onClose, onContinue }) {
       </div>
       <VerificationBoxes status={status} setStatus={setStatus} />
       <div className="verify-actions">
-        <button className="primary-prohub-button" type="button" onClick={onContinue}>Verify and continue</button>
-        <button className="outline-prohub-button" type="button" disabled={cooldown > 0} onClick={() => setCooldown(30)}>{cooldown > 0 ? `Resend code in ${cooldown}s` : 'Resend code'}</button>
+        <button className="h-[40px] w-full rounded-md bg-[#ff5a00] text-[16px] font-semibold text-white primary-prohub-button" type="button" onClick={onContinue}>Verify and continue</button>
+        <button className="h-[40px] w-full rounded-md border border-[#ff5a00] text-[16px] font-medium text-[#ff5a00] outline-prohub-button" type="button" disabled={cooldown > 0} onClick={() => setCooldown(30)}>{cooldown > 0 ? `Resend code in ${cooldown}s` : 'Resend code'}</button>
       </div>
       <div className="verify-state-actions">
         <button type="button" onClick={() => setStatus('invalid')}>Show invalid state</button>
@@ -124,37 +108,19 @@ function EmailVerificationModal({ onClose, onContinue }) {
   </div>;
 }
 
-function BillingCard({ plan }) {
-  return <article className="billing-card">
-    <p className="billing-audience">{plan.audience}</p>
-    <h3>{plan.name}</h3>
-    <p className="billing-price"><strong>{plan.price}</strong>{plan.cadence && <span>{plan.cadence}</span>}</p>
-    <small>{plan.description}</small>
-    <button className="outline-prohub-button" type="button">Select</button>
-  </article>;
-}
-
 function SubscriptionModal({ flow, onClose, onContinue }) {
-  const isCoach = flow === 'coach';
-  const plans = isCoach ? organizationPlans : playerParentPlans;
-
+  const plans = flow === 'coach' ? organizationPlans : playerParentPlans;
   return <div className="relative flex min-h-screen items-center justify-center bg-black auth-modal" role="dialog" aria-modal="true" aria-label="Subscription and license">
     <div className="auth-modal-card billing-modal-card">
       <button className="modal-close" type="button" aria-label="Close modal" onClick={onClose}>×</button>
-      <div className="modal-dashed-section billing-header">
-        <p className="modal-kicker">Subscription / license</p>
-        <h2>{isCoach ? 'Choose an organization license' : 'Choose a parent or player plan'}</h2>
-        <p>{isCoach ? 'Organization tiers are separate from individual parent and player memberships.' : 'Parent and player tiers stay separate from organization licenses.'}</p>
-      </div>
-      <div className="billing-card-grid">
-        {plans.map((plan) => <BillingCard key={plan.id} plan={plan} />)}
-      </div>
+      <div className="modal-dashed-section billing-header"><p className="modal-kicker">Subscription / license</p><h2>{flow === 'coach' ? 'Choose an organization license' : 'Choose a parent or player plan'}</h2><p>Organization tiers stay separate from parent and player tiers.</p></div>
+      <div className="billing-card-grid">{plans.map((plan) => <article className="billing-card" key={plan.id}><p className="billing-audience">{plan.audience}</p><h3>{plan.name}</h3><p className="billing-price"><strong>{plan.price}</strong>{plan.cadence && <span>{plan.cadence}</span>}</p><small>{plan.description}</small><button className="outline-prohub-button" type="button">Select</button></article>)}</div>
       <button className="primary-prohub-button billing-continue" type="button" onClick={onContinue}>Continue to workspace</button>
     </div>
   </div>;
 }
 
-export default function Login({ initialMode = 'login' }) {
+export default function ProHubAuthPrototype({ initialMode = 'login' }) {
   const [mode, setMode] = useState(initialMode);
   const [flow, setFlow] = useState('player');
   const [showVerify, setShowVerify] = useState(false);
@@ -166,64 +132,31 @@ export default function Login({ initialMode = 'login' }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (isSignup) {
-      setShowVerify(true);
-      return;
-    }
-    navigate(selected.path);
+    if (isSignup) setShowVerify(true);
+    else navigate(selected.path);
   }
 
   function finishVerification() {
     setShowVerify(false);
-    if (isInvitedCoach) {
-      navigate(selected.path);
-      return;
-    }
-    setShowBilling(true);
+    if (isInvitedCoach) navigate(selected.path);
+    else setShowBilling(true);
   }
 
   return <main className="min-h-screen bg-white font-['Poppins',system-ui,sans-serif text-neutral-950 prohub-auth-shell">
     <div className="flex min-h-screen prohub-auth-split">
       <AuthBrandPanel />
-
       <section className="relative flex min-h-screen flex-1 items-center justify-center overflow-hidden px-8 prohub-right-panel" aria-label="Authentication form">
         <img className="right-stadium-watermark" src={stadiumImage} alt="" aria-hidden="true" />
         <div className="relative z-10 w-full max-w-[490px] prohub-form-wrapper">
-          <div className="auth-card-header">
-            <p className="modal-kicker">{isSignup ? 'Create your account' : 'Welcome back'}</p>
-            <h2>{isSignup ? 'Start with ProHub.' : 'Log in to ProHub.'}</h2>
-            <p>{selected.headline}</p>
-          </div>
-
-          <div className="auth-mode-toggle" role="tablist" aria-label="Authentication mode">
-            <button className={mode === 'login' ? 'active' : ''} type="button" onClick={() => setMode('login')}>Login</button>
-            <button className={mode === 'signup' ? 'active' : ''} type="button" onClick={() => setMode('signup')}>Sign up</button>
-          </div>
-
-          <div className="prohub-flow-selector" aria-label="Select onboarding flow">
-            {flows.map((item) => <button key={item.id} className={flow === item.id ? 'active' : ''} type="button" onClick={() => setFlow(item.id)}>{item.label}</button>)}
-          </div>
-
-          <form className="prohub-auth-fields" onSubmit={handleSubmit}>
-            {isSignup && <AuthInput id="full-name" icon="◎" label="Full name" type="text" placeholder="Jordan Rivera" required />}
-            <AuthInput id="email" icon="✉" label="Email address" type="email" placeholder="you@prohub.com" required />
-            <AuthInput id="password" icon="◐" label="Password" type="password" placeholder="••••••••" required />
-            {isInvitedCoach && <AuthInput id="invite" icon="⌁" label="Organization invite code" type="text" placeholder="PROHUB-COACH-INVITE" required />}
-            <div className="auth-options-row">
-              <label className="check"><input type="checkbox" /> <span>Remember me</span></label>
-              <Link to="/forgot-password">Forgot password?</Link>
-            </div>
-            <button className="primary-prohub-button" type="submit">{isSignup ? 'Continue' : `Log in as ${selected.label}`}</button>
-            {!isSignup && <button className="outline-prohub-button" type="button" onClick={() => setMode('signup')}>Create account</button>}
-          </form>
-
+          <div className="auth-card-header"><p className="modal-kicker">{isSignup ? 'Create your account' : 'Welcome back'}</p><h2>{isSignup ? 'Start with ProHub.' : 'Log in to ProHub.'}</h2><p>{selected.headline}</p></div>
+          <div className="auth-mode-toggle" role="tablist" aria-label="Authentication mode"><button className={mode === 'login' ? 'active' : ''} type="button" onClick={() => setMode('login')}>Login</button><button className={mode === 'signup' ? 'active' : ''} type="button" onClick={() => setMode('signup')}>Sign up</button></div>
+          <div className="prohub-flow-selector" aria-label="Select onboarding flow">{flows.map((item) => <button key={item.id} className={flow === item.id ? 'active' : ''} type="button" onClick={() => setFlow(item.id)}>{item.label}</button>)}</div>
+          <form className="prohub-auth-fields" onSubmit={handleSubmit}>{isSignup && <AuthInput id="full-name" icon="◎" label="Full name" type="text" placeholder="Jordan Rivera" required />}<AuthInput id="email" icon="✉" label="Email address" type="email" placeholder="you@prohub.com" required /><AuthInput id="password" icon="◐" label="Password" type="password" placeholder="••••••••" required />{isInvitedCoach && <AuthInput id="invite" icon="⌁" label="Organization invite code" type="text" placeholder="PROHUB-COACH-INVITE" required />}<div className="auth-options-row"><label className="check"><input type="checkbox" /> <span>Remember me</span></label><Link to="/forgot-password">Forgot password?</Link></div><button className="h-[40px] w-full rounded-md bg-[#ff5a00] text-[16px] font-semibold text-white primary-prohub-button" type="submit">{isSignup ? 'Continue' : `Log in as ${selected.label}`}</button>{!isSignup && <button className="h-[40px] w-full rounded-md border border-[#ff5a00] text-[16px] font-medium text-[#ff5a00] outline-prohub-button" type="button" onClick={() => setMode('signup')}>Create account</button>}</form>
           {isSignup && isInvitedCoach && <div className="invite-note">Coach invited by an organization will not see pricing tiers.</div>}
         </div>
       </section>
     </div>
-
-    <BottomChrome />
-
+    <div className="secure-login-badge">Secure encrypted login</div><a className="support-link" href="mailto:support@prohub.com">Contact Support</a>
     {showVerify && <EmailVerificationModal onClose={() => setShowVerify(false)} onContinue={finishVerification} />}
     {showBilling && <SubscriptionModal flow={flow} onClose={() => setShowBilling(false)} onContinue={() => navigate(selected.path)} />}
   </main>;
