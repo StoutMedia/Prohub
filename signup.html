@@ -9,27 +9,60 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body data-root-path=".">
-  <main class="auth-shell">
-    <section class="auth-panel dark-card">
-      <a class="brand" href="index.html"><span class="brand-mark">P</span><span><strong>ProHub</strong></span></a>
-      <div class="page-hero" style="margin-top:3rem"><p class="eyebrow">Start your demo</p><h1>Create a connected ProHub workspace.</h1><p>This form validates inputs, creates a local demo session, and redirects to the role-based dashboard. Stripe checkout can be inserted after signup.</p></div>
-      <ul class="check-list"><li>Coach, player, director, and parent roles</li><li>Protected app pages</li><li>Reusable SaaS layout system</li></ul>
+  <main class="auth-shell prohub-auth-static">
+    <section class="auth-panel auth-left-panel">
+      <a class="brand auth-wordmark" href="index.html"><span class="brand-mark">P</span><span><strong>PROHUB</strong></span></a>
+      <div class="page-hero auth-hero-copy"><p class="eyebrow">Start onboarding</p><h1>PROHUB</h1><h2>Create a connected ProHub workspace.</h2><p>Verify email, select a flow, and continue without showing unrelated billing tiers.</p></div>
+      <div class="auth-feature-list"><span>Role-based flows</span><span>Email verification</span><span>Billing cards</span></div>
+      <div class="secure-login-badge">🔒 Secure login</div>
     </section>
-    <section class="auth-panel">
-      <form class="card auth-form" data-validate data-auth="signup">
-        <h2>Create account</h2>
+    <section class="auth-panel auth-right-panel">
+      <form class="card auth-form prohub-static-card" data-validate data-auth="signup">
+        <p class="eyebrow">Create your account</p>
+        <h2>Start onboarding.</h2>
         <div class="form-grid">
           <label class="form-field full">Full name<input name="name" required placeholder="Maya Johnson" /><span class="form-error">Name is required.</span></label>
           <label class="form-field">Email<input type="email" name="email" required placeholder="you@club.com" /><span class="form-error">Enter a valid email.</span></label>
-          <label class="form-field">Role<select name="role" required><option value="coach">Coach</option><option value="player">Player</option><option value="director">Director / Club Admin</option><option value="parent">Parent</option></select><span class="form-error">Choose a role.</span></label>
+          <label class="form-field">Role<select name="role" required data-pricing-role><option value="player">Player</option><option value="parent">Parent</option><option value="coach">Coach</option><option value="coach" data-invited="true">Invited coach</option><option value="director">Director / Club Admin</option></select><span class="form-error">Choose a role.</span></label>
           <label class="form-field full">Password<input type="password" name="password" minlength="6" required placeholder="At least 6 characters" /><span class="form-error">Password must be at least 6 characters.</span></label>
         </div>
+        <div class="billing-card-grid" data-parent-player-pricing>
+          <article class="billing-card"><h3>Starter</h3><p><strong>$19</strong><span>/mo</span></p><small>Profile, training workspace, and reports.</small></article>
+          <article class="billing-card"><h3>Pro</h3><p><strong>$49</strong><span>/mo</span></p><small>Adds IDP tools and recruiting CRM.</small></article>
+          <article class="billing-card"><h3>Elite</h3><p><strong>$99</strong><span>/mo</span></p><small>Coach-supported pathway and parent reports.</small></article>
+        </div>
+        <p class="invite-note" data-invite-note hidden>Pricing tiers are skipped for invited coaches joining an existing organization.</p>
+        <button class="btn btn-secondary" type="button" data-modal-open="verify-email">Preview email verification</button>
         <button class="btn btn-primary" type="submit">Create demo workspace</button>
-        <p class="help-text">Future database integration: create organization, user profile, role mapping, and billing plan records here.</p>
         <p>Already have an account? <a class="text-button" href="login.html">Login</a></p>
       </form>
     </section>
+    <a class="support-link" href="mailto:support@prohub.com">Support</a>
   </main>
+  <div class="modal auth-modal-static" id="verify-email" hidden>
+    <div class="modal-card auth-modal-card-static">
+      <button class="modal-close" data-modal-close type="button" aria-label="Close modal">×</button>
+      <p class="eyebrow">Email verification</p>
+      <h2>Enter your code</h2>
+      <p>Use the six-digit verification code sent to your email.</p>
+      <div class="verification-boxes" aria-label="Email verification code"><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /></div>
+      <button class="btn btn-primary" type="button" data-modal-close>Verify and continue</button>
+    </div>
+  </div>
   <script type="module" src="assets/js/app.js"></script>
+  <script>
+    const roleSelect = document.querySelector('[data-pricing-role]');
+    const pricing = document.querySelector('[data-parent-player-pricing]');
+    const inviteNote = document.querySelector('[data-invite-note]');
+    function syncPricing() {
+      const selected = roleSelect.options[roleSelect.selectedIndex];
+      const invited = selected?.dataset.invited === 'true';
+      const showPricing = !invited && (roleSelect.value === 'player' || roleSelect.value === 'parent');
+      pricing.hidden = !showPricing;
+      inviteNote.hidden = !invited;
+    }
+    roleSelect.addEventListener('change', syncPricing);
+    syncPricing();
+  </script>
 </body>
 </html>

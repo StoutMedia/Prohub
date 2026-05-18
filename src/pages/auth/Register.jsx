@@ -1,2 +1,5 @@
 import Login from './Login.jsx';
-export default function Register(){return <Login/>}
+
+export default function Register() {
+  return <Login initialMode="signup" />;
+}
