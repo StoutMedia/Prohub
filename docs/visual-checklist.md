@@ -1,0 +1,38 @@
+# ProHub Auth Visual Checklist
+
+- [x] Desktop auth pages use a split layout with a left stadium image panel and right white form panel.
+- [x] Left panel width is set to 49.4% on desktop.
+- [x] Left panel includes a dark overlay over the stadium image.
+- [x] Left panel includes large `PROHUB` text.
+- [x] Left panel includes `Build. Train. Perform`.
+- [x] Left panel includes supporting copy under the hero text.
+- [x] Right side uses a white background.
+- [x] Right side includes a very subtle stadium image watermark.
+- [x] Form content max width is 490px.
+- [x] Inputs are 51px high.
+- [x] Inputs use neutral-700 style borders.
+- [x] Inputs use orange `#ff5a00` focus state.
+- [x] Inputs include icons on the right side.
+- [x] Primary buttons use orange `#ff5a00`, white text, 40px height, and rounded-md corners.
+- [x] Outline buttons use orange border, orange text, 40px height, and rounded-md corners.
+- [x] Email verification has no email input field.
+- [x] Email verification uses six code boxes.
+- [x] Each code box is 60px wide and 80px high on desktop.
+- [x] Code boxes use large centered number text.
+- [x] Invalid and expired code error states are implemented.
+- [x] Resend cooldown is implemented.
+- [x] Modals use a black full-screen background.
+- [x] Modals use centered white cards.
+- [x] Modals include dashed border sections and compact spacing.
+- [x] Modal buttons use the same orange button styles.
+- [x] Subscription/license screen uses a white modal on black background.
+- [x] Billing cards use the same dashed, compact visual language.
+- [x] Organization tiers are separate from parent/player tiers.
+- [x] Coach invited by organization does not see pricing tiers.
+- [x] Secure encrypted login badge appears bottom-left.
+- [x] Contact Support link appears bottom-right.
+- [x] Auth implementation does not use shadcn Card styling.
+- [x] Gradients are limited to the stadium overlay.
+- [x] Dashboard styles were not redesigned.
+- [x] Brand colors remain black `#050505` and orange `#ff5a00`.
+- [x] Large modern SaaS cards were avoided outside prototype billing cards.

@@ -13,3 +13,80 @@
 .prohub-auth.auth-page{position:relative;grid-template-columns:49.4% minmax(360px,1fr);gap:0;align-items:stretch;padding:0;background:#000;overflow:hidden}.prohub-left-panel{position:relative;display:flex;min-height:100vh;flex-direction:column;justify-content:center;border:0;border-radius:0;background:radial-gradient(circle at 25% 18%,rgba(255,90,0,.36),transparent 30%),linear-gradient(145deg,#080808,#141414 52%,#050505);box-shadow:none;color:#fff;padding:clamp(2rem,5vw,5.75rem)}.prohub-wordmark{position:absolute;top:34px;left:clamp(2rem,5vw,5.75rem);display:flex;align-items:center;gap:.75rem;font-family:Poppins,Inter,sans-serif;font-weight:900;letter-spacing:.08em;color:#fff}.prohub-left-panel .brand-mark{background:#ff5a00;color:#fff;box-shadow:0 18px 42px rgba(255,90,0,.34)}.prohub-hero-copy{max-width:620px}.prohub-hero-copy h1{font-size:clamp(4.5rem,10vw,8.6rem);font-weight:900;letter-spacing:-.075em;line-height:.86;margin:0 0 1.1rem;color:#fff}.prohub-hero-copy h2{max-width:560px;font-size:clamp(2.1rem,4.2vw,4.15rem);font-weight:900;letter-spacing:-.045em;color:#fff}.prohub-left-panel p{max-width:580px;color:rgba(255,255,255,.72)}.auth-feature-list{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem}.auth-feature-list span{border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);padding:.55rem .85rem;color:#fff;font-weight:900;font-size:.82rem}.secure-login-badge{position:absolute;bottom:30px;left:clamp(2rem,5vw,5.75rem);display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.08);padding:.8rem 1rem;color:#fff;font-weight:900;box-shadow:0 18px 50px rgba(0,0,0,.28)}.prohub-auth-card{display:flex;min-height:100vh;flex-direction:column;justify-content:center;border:0;border-radius:0;background:#fff;box-shadow:none;padding:clamp(2rem,5vw,5.5rem);color:#0a0a0a}.auth-card-header{max-width:620px}.auth-card-header h2{font-size:clamp(2rem,4vw,3.75rem);font-weight:900;letter-spacing:-.045em}.auth-mode-toggle{display:flex;width:max-content;max-width:100%;gap:.35rem;margin:1.3rem 0 .4rem;padding:.3rem;border:1px solid rgba(0,0,0,.1);border-radius:999px;background:#f6f6f6}.auth-mode-toggle button{border:0;border-radius:999px;background:transparent;color:#59606b;padding:.72rem 1.15rem;font-weight:900}.auth-mode-toggle button.active{background:#0c0c0c;color:#fff}.prohub-flow-selector.segmented{width:100%;border:0;border-radius:0;background:transparent;padding:0;margin:1rem 0}.prohub-flow-selector.segmented button{border:1px solid rgba(0,0,0,.12);background:#fff}.prohub-flow-selector.segmented .active{background:#fff3eb;box-shadow:0 0 0 2px #ff5a00;color:#111}.prohub-auth-fields{max-width:620px}.prohub-auth-fields label{color:#111}.prohub-auth-fields input,input,select{min-height:51px}.prohub-auth-fields input{border-radius:14px}.btn-primary{background:#ff5a00;border-color:#ff5a00;color:#fff;box-shadow:0 14px 30px rgba(255,90,0,.22)}.btn-primary:hover{background:#e65100;border-color:#e65100}.billing-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;max-width:760px;margin-top:1.4rem}.billing-card{border:2px dashed rgba(0,0,0,.22);border-radius:22px;background:#fffaf7;padding:1.1rem}.billing-card h3{margin-bottom:.55rem}.billing-card p{margin:.2rem 0;color:#111}.billing-card strong{font-size:1.85rem;color:#111}.billing-card span{color:#5d6472;font-weight:800}.billing-card small{display:block;color:#5d6472;line-height:1.45}.invite-note{max-width:620px;margin-top:1.2rem;border:2px dashed rgba(0,0,0,.22);border-radius:18px;background:#fafafa;padding:1rem;color:#4b5563;font-weight:800}.support-link{position:fixed;right:30px;bottom:30px;z-index:20;border:1px solid rgba(0,0,0,.1);border-radius:999px;background:#fff;padding:.8rem 1rem;color:#111;font-weight:900;box-shadow:0 16px 44px rgba(0,0,0,.16)}.auth-modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#000;padding:1rem}.auth-modal-card{position:relative;width:min(100%,560px);border-radius:28px;background:#fff;padding:clamp(1.5rem,4vw,2.5rem);box-shadow:0 30px 100px rgba(0,0,0,.45);color:#111;text-align:center}.auth-modal-card h2{font-size:clamp(2rem,4vw,3rem);font-weight:900}.auth-modal-card p{color:#5d6472}.auth-modal-card .modal-close{position:absolute;top:1rem;right:1rem;width:40px;height:40px;border:0;border-radius:999px;background:#111;color:#fff;font-size:1.45rem;line-height:1}.verification-boxes{display:flex;justify-content:center;gap:.7rem;margin:1.5rem 0}.verification-boxes input{width:60px;height:80px;min-height:80px;padding:0;border:2px solid rgba(0,0,0,.16);border-radius:16px;text-align:center;font-size:2rem;font-weight:900;color:#111}.verification-boxes input:focus{outline:3px solid rgba(255,90,0,.25);border-color:#ff5a00}.auth-options-row{justify-content:space-between;max-width:620px}.auth-options-row a{color:#ff5a00;font-weight:900}
 @media(max-width:1100px){.prohub-auth.auth-page{grid-template-columns:1fr}.prohub-left-panel,.prohub-auth-card{min-height:auto}.prohub-left-panel{padding-top:7rem}.prohub-auth-card{padding-bottom:6rem}.support-link{right:1rem;bottom:1rem}.secure-login-badge{position:static;width:max-content;margin-top:2rem}.billing-card-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.prohub-hero-copy h1{font-size:clamp(3.5rem,18vw,5rem)}.prohub-wordmark{left:1rem}.prohub-left-panel,.prohub-auth-card{padding:5.5rem 1rem 2rem}.verification-boxes{gap:.35rem}.verification-boxes input{width:46px;height:68px;min-height:68px}.support-link{position:absolute}}
+
+/* Prototype-exact auth rebuild */
+:root{--orange:#ff5a00;--orange-2:#ff5a00;--bg:#050505}
+body{font-family:Poppins,system-ui,sans-serif}
+.prohub-auth-shell{min-height:100vh;background:#fff;color:#0a0a0a;font-family:Poppins,system-ui,sans-serif;position:relative;overflow:hidden}
+.prohub-auth-split{display:flex;min-height:100vh;background:#fff}
+.prohub-left-panel{position:relative;display:block;min-height:100vh;width:49.4%;overflow:hidden;background:#050505;color:#fff;padding:0;border:0;border-radius:0;box-shadow:none}
+.prohub-stadium-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.78) contrast(1.08);transform:scale(1.01)}
+.prohub-stadium-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,5,5,.72),rgba(5,5,5,.48)),linear-gradient(180deg,rgba(5,5,5,.15),rgba(5,5,5,.84));z-index:1}
+.prohub-wordmark{position:absolute;top:38px;left:58px;z-index:2;color:#fff;font-size:18px;font-weight:900;letter-spacing:.02em;line-height:1}
+.prohub-hero-copy{position:absolute;left:58px;right:54px;bottom:98px;z-index:2;max-width:590px;color:#fff}
+.prohub-hero-copy h1{margin:0 0 18px;color:#fff;font-size:clamp(72px,8.9vw,138px);font-weight:900;letter-spacing:-.08em;line-height:.84;text-transform:uppercase}
+.prohub-hero-copy h2{margin:0 0 17px;color:#fff;font-size:clamp(38px,4.3vw,66px);font-weight:900;letter-spacing:-.055em;line-height:.92}
+.prohub-hero-copy p{margin:0;max-width:520px;color:rgba(255,255,255,.76);font-size:16px;font-weight:500;line-height:1.62}
+.prohub-right-panel{position:relative;display:flex;min-height:100vh;flex:1;align-items:center;justify-content:center;overflow:hidden;background:#fff;padding:48px 32px;color:#0a0a0a}
+.right-stadium-watermark{position:absolute;inset:auto -8% -18% auto;width:92%;height:78%;object-fit:cover;opacity:.035;filter:grayscale(1);pointer-events:none}
+.prohub-form-wrapper{position:relative;z-index:10;width:100%;max-width:490px;margin:0 auto;color:#0a0a0a}
+.auth-card-header{max-width:490px;margin:0 0 24px;color:#0a0a0a}
+.modal-kicker{margin:0 0 9px;color:#ff5a00;font-size:12px;font-weight:800;letter-spacing:.16em;line-height:1.2;text-transform:uppercase}
+.auth-card-header h2{margin:0 0 12px;color:#050505;font-size:42px;font-weight:900;letter-spacing:-.05em;line-height:.98}
+.auth-card-header p:not(.modal-kicker){margin:0;color:#595959;font-size:15px;font-weight:500;line-height:1.55}
+.auth-mode-toggle{display:flex;gap:8px;width:100%;margin:0 0 18px;padding:0;border:0;border-radius:0;background:transparent}
+.auth-mode-toggle button{height:40px;flex:1;border:1px solid #d4d4d4;border-radius:6px;background:transparent;color:#0a0a0a;font-size:16px;font-weight:600;box-shadow:none}
+.auth-mode-toggle button.active{border-color:#ff5a00;background:#ff5a00;color:#fff}
+.prohub-flow-selector{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 18px;padding:0;border:0;background:transparent}
+.prohub-flow-selector button{min-height:40px;border:1px solid #404040;border-radius:6px;background:transparent;color:#111;font-size:12px;font-weight:700;line-height:1.1;padding:6px 7px;text-align:center}
+.prohub-flow-selector button.active{border-color:#ff5a00;background:#fff7f2;color:#ff5a00;box-shadow:0 0 0 1px #ff5a00}
+.prohub-auth-fields{display:grid;gap:14px;max-width:490px;margin:0}
+.prohub-field{display:grid;gap:7px;margin:0;color:#050505;font-size:14px;font-weight:700;line-height:1.2}
+.prohub-input-wrap{position:relative;display:block}
+.prohub-auth-fields input,.prohub-field input{height:51px;min-height:51px;width:100%;border:1px solid #404040;border-radius:6px;background:transparent;color:#050505;font-size:16px;font-weight:500;line-height:1;padding:0 56px 0 16px;outline:none;box-shadow:none}
+.prohub-auth-fields input::placeholder,.prohub-field input::placeholder{color:#8a8a8a}
+.prohub-auth-fields input:focus,.prohub-field input:focus{border-color:#ff5a00;box-shadow:0 0 0 2px rgba(255,90,0,.16)}
+.prohub-field-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#0a0a0a;font-size:17px;font-weight:900;line-height:1;pointer-events:none}
+.auth-options-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:1px 0 0;color:#0a0a0a;font-size:13px;font-weight:600;max-width:490px}
+.auth-options-row .check{display:flex;align-items:center;gap:8px;margin:0;color:#0a0a0a;font-size:13px;font-weight:600}
+.auth-options-row .check input{width:16px;height:16px;min-height:16px;padding:0;accent-color:#ff5a00}
+.auth-options-row a{color:#ff5a00;font-size:13px;font-weight:700;text-decoration:none}
+.primary-prohub-button,.outline-prohub-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;width:100%;border-radius:6px;font-size:16px;line-height:1;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease,opacity .15s ease}
+.primary-prohub-button{border:1px solid #ff5a00;background:#ff5a00;color:#fff;font-weight:600;box-shadow:none}
+.primary-prohub-button:hover{background:#e65100;border-color:#e65100;color:#fff}
+.outline-prohub-button{border:1px solid #ff5a00;background:transparent;color:#ff5a00;font-weight:500;box-shadow:none}
+.outline-prohub-button:disabled{opacity:.46;cursor:not-allowed}
+.invite-note{margin-top:16px;border:1px dashed #a3a3a3;border-radius:6px;background:#fff;padding:12px;color:#4b5563;font-size:13px;font-weight:600;line-height:1.45}
+.secure-login-badge{position:fixed;left:30px;bottom:30px;z-index:30;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:0;background:transparent;color:rgba(255,255,255,.86);font-size:13px;font-weight:600;box-shadow:none;padding:0}
+.secure-login-badge::before{content:"";width:10px;height:10px;border-radius:999px;background:#ff5a00;box-shadow:0 0 0 4px rgba(255,90,0,.18)}
+.support-link{position:fixed;right:30px;bottom:30px;z-index:30;border:0;border-radius:0;background:transparent;color:#ff5a00;font-size:13px;font-weight:700;box-shadow:none;padding:0;text-decoration:none}
+.auth-modal{position:fixed;inset:0;z-index:100;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#000;padding:22px;color:#050505}
+.auth-modal-card{position:relative;width:min(100%,676px);border-radius:8px;background:#fff;color:#050505;text-align:left;box-shadow:none;padding:26px}
+.auth-modal-card-small{width:min(100%,676px)}
+.billing-modal-card{width:min(100%,920px)}
+.auth-modal-card .modal-close{position:absolute;top:18px;right:18px;display:grid;place-items:center;width:34px;height:34px;border:1px solid #d4d4d4;border-radius:6px;background:#fff;color:#050505;font-size:24px;font-weight:500;line-height:1}
+.modal-dashed-section{border:1px dashed #a3a3a3;border-radius:8px;padding:18px;text-align:center;margin-bottom:18px}
+.modal-dashed-section h2{margin:0 0 10px;color:#050505;font-size:34px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.modal-dashed-section p:not(.modal-kicker){margin:0 auto;max-width:520px;color:#5f5f5f;font-size:14px;font-weight:500;line-height:1.5}
+.verification-boxes{display:flex;justify-content:center;gap:12px;margin:18px 0 13px}
+.verification-boxes input{height:80px;min-height:80px;width:60px;border:1px solid #404040;border-radius:6px;background:transparent;color:#050505;text-align:center;font-size:30px;font-weight:900;line-height:1;padding:0;outline:none;box-shadow:none}
+.verification-boxes input:focus{border-color:#ff5a00;box-shadow:0 0 0 2px rgba(255,90,0,.16)}
+.verification-boxes input.code-error{border-color:#c1121f;color:#c1121f;box-shadow:0 0 0 2px rgba(193,18,31,.12)}
+.verify-error{margin:0 0 14px;color:#c1121f;text-align:center;font-size:13px;font-weight:700;line-height:1.4}
+.verify-actions{display:grid;gap:10px;margin-top:16px}
+.verify-state-actions{display:flex;justify-content:center;gap:14px;margin-top:14px}
+.verify-state-actions button{border:0;background:transparent;color:#777;font-size:12px;font-weight:600;text-decoration:underline}
+.billing-header{text-align:left}
+.billing-header p:not(.modal-kicker){margin:0;max-width:650px}
+.billing-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0;max-width:none}
+.billing-card{display:flex;min-height:218px;flex-direction:column;border:1px dashed #a3a3a3;border-radius:8px;background:#fff;padding:16px;color:#050505}
+.billing-audience{margin:0 0 10px;color:#ff5a00;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;line-height:1.2}
+.billing-card h3{margin:0 0 10px;color:#050505;font-size:22px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
+.billing-price{margin:0 0 10px;color:#050505;line-height:1}
+.billing-price strong{color:#050505;font-size:34px;font-weight:900;letter-spacing:-.04em}
+.billing-price span{color:#5f5f5f;font-size:14px;font-weight:700}
+.billing-card small{display:block;min-height:62px;color:#5f5f5f;font-size:13px;font-weight:500;line-height:1.42;margin-bottom:14px}
+.billing-card .outline-prohub-button{margin-top:auto}
+.billing-continue{margin-top:16px}
+@media(max-width:1100px){.prohub-auth-split{display:block}.prohub-left-panel{display:block;width:100%;min-height:430px}.prohub-right-panel{min-height:auto;padding:42px 24px 90px}.secure-login-badge{color:#050505;left:24px}.support-link{right:24px}.prohub-hero-copy{bottom:56px}.billing-card-grid{grid-template-columns:1fr}.billing-card{min-height:auto}}
+@media(max-width:760px){.prohub-left-panel{min-height:360px}.prohub-wordmark{left:22px;top:24px}.prohub-hero-copy{left:22px;right:22px;bottom:38px}.prohub-hero-copy h1{font-size:54px}.prohub-hero-copy h2{font-size:34px}.prohub-right-panel{padding:34px 18px 88px}.auth-card-header h2{font-size:36px}.prohub-flow-selector{grid-template-columns:repeat(2,minmax(0,1fr))}.verification-boxes{gap:7px}.verification-boxes input{width:44px;height:66px;min-height:66px;font-size:26px}.auth-modal-card{padding:18px}.modal-dashed-section h2{font-size:28px}.secure-login-badge{left:18px;bottom:18px}.support-link{right:18px;bottom:18px}}

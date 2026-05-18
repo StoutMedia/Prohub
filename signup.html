@@ -4,65 +4,71 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signup | ProHub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body data-root-path=".">
-  <main class="auth-shell prohub-auth-static">
-    <section class="auth-panel auth-left-panel">
-      <a class="brand auth-wordmark" href="index.html"><span class="brand-mark">P</span><span><strong>PROHUB</strong></span></a>
-      <div class="page-hero auth-hero-copy"><p class="eyebrow">Start onboarding</p><h1>PROHUB</h1><h2>Create a connected ProHub workspace.</h2><p>Verify email, select a flow, and continue without showing unrelated billing tiers.</p></div>
-      <div class="auth-feature-list"><span>Role-based flows</span><span>Email verification</span><span>Billing cards</span></div>
-      <div class="secure-login-badge">🔒 Secure login</div>
-    </section>
-    <section class="auth-panel auth-right-panel">
-      <form class="card auth-form prohub-static-card" data-validate data-auth="signup">
-        <p class="eyebrow">Create your account</p>
-        <h2>Start onboarding.</h2>
-        <div class="form-grid">
-          <label class="form-field full">Full name<input name="name" required placeholder="Maya Johnson" /><span class="form-error">Name is required.</span></label>
-          <label class="form-field">Email<input type="email" name="email" required placeholder="you@club.com" /><span class="form-error">Enter a valid email.</span></label>
-          <label class="form-field">Role<select name="role" required data-pricing-role><option value="player">Player</option><option value="parent">Parent</option><option value="coach">Coach</option><option value="coach" data-invited="true">Invited coach</option><option value="director">Director / Club Admin</option></select><span class="form-error">Choose a role.</span></label>
-          <label class="form-field full">Password<input type="password" name="password" minlength="6" required placeholder="At least 6 characters" /><span class="form-error">Password must be at least 6 characters.</span></label>
+  <main class="prohub-auth-shell prohub-auth-static">
+    <div class="prohub-auth-split">
+      <section class="prohub-left-panel" aria-label="ProHub onboarding introduction">
+        <img class="prohub-stadium-image" src="assets/img/prohub-stadium.svg" alt="Soccer stadium lights" />
+        <div class="prohub-stadium-overlay"></div>
+        <a class="prohub-wordmark" href="index.html">PROHUB</a>
+        <div class="prohub-hero-copy">
+          <h1>PROHUB</h1>
+          <h2>Build. Train. Perform</h2>
+          <p>One connected platform for soccer players, parents, coaches, and organizations to manage development from first session to next opportunity.</p>
         </div>
-        <div class="billing-card-grid" data-parent-player-pricing>
-          <article class="billing-card"><h3>Starter</h3><p><strong>$19</strong><span>/mo</span></p><small>Profile, training workspace, and reports.</small></article>
-          <article class="billing-card"><h3>Pro</h3><p><strong>$49</strong><span>/mo</span></p><small>Adds IDP tools and recruiting CRM.</small></article>
-          <article class="billing-card"><h3>Elite</h3><p><strong>$99</strong><span>/mo</span></p><small>Coach-supported pathway and parent reports.</small></article>
+      </section>
+      <section class="prohub-right-panel" aria-label="Authentication form">
+        <img class="right-stadium-watermark" src="assets/img/prohub-stadium.svg" alt="" aria-hidden="true" />
+        <div class="prohub-form-wrapper">
+          <div class="auth-card-header">
+            <p class="modal-kicker">Create your account</p>
+            <h2>Start with ProHub.</h2>
+            <p>Verify email, select a flow, and continue without showing unrelated billing tiers.</p>
+          </div>
+          <form class="prohub-auth-fields" data-validate data-auth="signup">
+            <div class="prohub-flow-selector" aria-label="Select onboarding flow">
+              <label><input type="radio" name="role" value="player" checked /> <span>Player</span></label>
+              <label><input type="radio" name="role" value="parent" /> <span>Parent</span></label>
+              <label><input type="radio" name="role" value="coach" /> <span>Coach</span></label>
+              <label><input type="radio" name="role" value="invited-coach" data-invited="true" /> <span>Coach invite</span></label>
+            </div>
+            <label class="prohub-field" for="signup-name"><span>Full name</span><span class="prohub-input-wrap"><input id="signup-name" name="name" required placeholder="Jordan Rivera" /><span class="prohub-field-icon" aria-hidden="true">◎</span></span><span class="form-error">Name is required.</span></label>
+            <label class="prohub-field" for="signup-email"><span>Email address</span><span class="prohub-input-wrap"><input id="signup-email" type="email" name="email" required placeholder="you@prohub.com" /><span class="prohub-field-icon" aria-hidden="true">✉</span></span><span class="form-error">Enter a valid email.</span></label>
+            <label class="prohub-field" for="signup-password"><span>Password</span><span class="prohub-input-wrap"><input id="signup-password" type="password" name="password" minlength="6" required placeholder="••••••••" /><span class="prohub-field-icon" aria-hidden="true">◐</span></span><span class="form-error">Password must be at least 6 characters.</span></label>
+            <label class="prohub-field" data-invite-field hidden for="invite-code"><span>Organization invite code</span><span class="prohub-input-wrap"><input id="invite-code" name="invite" placeholder="PROHUB-COACH-INVITE" /><span class="prohub-field-icon" aria-hidden="true">⌁</span></span></label>
+            <p class="invite-note" data-invite-note hidden>Coach invited by an organization will not see pricing tiers.</p>
+            <button class="primary-prohub-button" type="submit">Continue</button>
+            <a class="outline-prohub-button" href="login.html">Back to login</a>
+          </form>
         </div>
-        <p class="invite-note" data-invite-note hidden>Pricing tiers are skipped for invited coaches joining an existing organization.</p>
-        <button class="btn btn-secondary" type="button" data-modal-open="verify-email">Preview email verification</button>
-        <button class="btn btn-primary" type="submit">Create demo workspace</button>
-        <p>Already have an account? <a class="text-button" href="login.html">Login</a></p>
-      </form>
-    </section>
-    <a class="support-link" href="mailto:support@prohub.com">Support</a>
-  </main>
-  <div class="modal auth-modal-static" id="verify-email" hidden>
-    <div class="modal-card auth-modal-card-static">
-      <button class="modal-close" data-modal-close type="button" aria-label="Close modal">×</button>
-      <p class="eyebrow">Email verification</p>
-      <h2>Enter your code</h2>
-      <p>Use the six-digit verification code sent to your email.</p>
-      <div class="verification-boxes" aria-label="Email verification code"><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /><input maxlength="1" inputmode="numeric" /></div>
-      <button class="btn btn-primary" type="button" data-modal-close>Verify and continue</button>
+      </section>
     </div>
-  </div>
+    <div class="secure-login-badge">Secure encrypted login</div>
+    <a class="support-link" href="mailto:support@prohub.com">Contact Support</a>
+    <div class="auth-modal" id="verify-modal" role="dialog" aria-modal="true" aria-label="Verify email" hidden>
+      <div class="auth-modal-card auth-modal-card-small">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close modal">×</button>
+        <div class="modal-dashed-section"><p class="modal-kicker">Email verification</p><h2>Enter your code</h2><p>We sent a six-digit code to your inbox. Enter it below to secure your ProHub account.</p></div>
+        <div class="verification-boxes" aria-label="Email verification code"><input inputmode="numeric" maxlength="1" aria-label="Digit 1" /><input inputmode="numeric" maxlength="1" aria-label="Digit 2" /><input inputmode="numeric" maxlength="1" aria-label="Digit 3" /><input inputmode="numeric" maxlength="1" aria-label="Digit 4" /><input inputmode="numeric" maxlength="1" aria-label="Digit 5" /><input inputmode="numeric" maxlength="1" aria-label="Digit 6" /></div>
+        <p class="verify-error" data-verify-error hidden></p>
+        <div class="verify-actions"><button class="primary-prohub-button" type="button" data-verify-continue>Verify and continue</button><button class="outline-prohub-button" type="button" data-resend-code>Resend code in 30s</button></div>
+        <div class="verify-state-actions"><button type="button" data-verify-state="invalid">Show invalid state</button><button type="button" data-verify-state="expired">Show expired state</button></div>
+      </div>
+    </div>
+    <div class="auth-modal" id="billing-modal" role="dialog" aria-modal="true" aria-label="Subscription and license" hidden>
+      <div class="auth-modal-card billing-modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close modal">×</button>
+        <div class="modal-dashed-section billing-header"><p class="modal-kicker">Subscription / license</p><h2 data-billing-title>Choose a parent or player plan</h2><p data-billing-copy>Parent and player tiers stay separate from organization licenses.</p></div>
+        <div class="billing-card-grid" data-billing-cards></div>
+        <button class="primary-prohub-button billing-continue" type="button" data-billing-continue>Continue to workspace</button>
+      </div>
+    </div>
+  </main>
   <script type="module" src="assets/js/app.js"></script>
-  <script>
-    const roleSelect = document.querySelector('[data-pricing-role]');
-    const pricing = document.querySelector('[data-parent-player-pricing]');
-    const inviteNote = document.querySelector('[data-invite-note]');
-    function syncPricing() {
-      const selected = roleSelect.options[roleSelect.selectedIndex];
-      const invited = selected?.dataset.invited === 'true';
-      const showPricing = !invited && (roleSelect.value === 'player' || roleSelect.value === 'parent');
-      pricing.hidden = !showPricing;
-      inviteNote.hidden = !invited;
-    }
-    roleSelect.addEventListener('change', syncPricing);
-    syncPricing();
-  </script>
 </body>
 </html>

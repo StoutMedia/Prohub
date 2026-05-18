@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Stadium lights over a soccer field">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#111111"/>
+      <stop offset="0.55" stop-color="#2a2a2a"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="light" cx="50%" cy="35%" r="60%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="0.18" stop-color="#ffefe5" stop-opacity="0.38"/>
+      <stop offset="0.5" stop-color="#ff5a00" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="field" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#24301f"/>
+      <stop offset="1" stop-color="#071008"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#sky)"/>
+  <rect width="1200" height="900" fill="url(#light)"/>
+  <path d="M0 375 C190 300 430 260 600 260 C770 260 1010 300 1200 375 L1200 575 C1010 500 780 462 600 462 C420 462 190 500 0 575 Z" fill="#161616"/>
+  <path d="M65 397 C235 340 430 312 600 312 C770 312 965 340 1135 397" fill="none" stroke="#777" stroke-opacity="0.35" stroke-width="18"/>
+  <path d="M100 450 C265 405 445 382 600 382 C755 382 935 405 1100 450" fill="none" stroke="#eeeeee" stroke-opacity="0.13" stroke-width="10"/>
+  <g opacity="0.55">
+    <circle cx="202" cy="310" r="8" fill="#fff"/><circle cx="238" cy="300" r="8" fill="#fff"/><circle cx="274" cy="292" r="8" fill="#fff"/><circle cx="310" cy="285" r="8" fill="#fff"/>
+    <circle cx="890" cy="285" r="8" fill="#fff"/><circle cx="926" cy="292" r="8" fill="#fff"/><circle cx="962" cy="300" r="8" fill="#fff"/><circle cx="998" cy="310" r="8" fill="#fff"/>
+  </g>
+  <rect y="575" width="1200" height="325" fill="url(#field)"/>
+  <path d="M0 665 C270 610 930 610 1200 665" fill="none" stroke="#f5f5f5" stroke-opacity="0.25" stroke-width="5"/>
+  <path d="M235 900 L505 592 M965 900 L695 592" stroke="#ffffff" stroke-opacity="0.18" stroke-width="4"/>
+  <ellipse cx="600" cy="720" rx="150" ry="42" fill="none" stroke="#fff" stroke-opacity="0.18" stroke-width="5"/>
+  <path d="M0 790 C250 750 950 750 1200 790" fill="none" stroke="#ff5a00" stroke-opacity="0.15" stroke-width="24"/>
+</svg>
