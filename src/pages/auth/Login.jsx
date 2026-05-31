@@ -3,22 +3,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import stadiumImage from '../../assets/prohub-stadium.svg';
 
 const flows = [
-  { id: 'player', label: 'Player', path: '/app/player', headline: 'Train smarter, track development, and keep every next step clear.' },
-  { id: 'parent', label: 'Parent', path: '/app/parent', headline: 'Follow your player, manage billing, and stay connected to the plan.' },
-  { id: 'coach', label: 'Coach', path: '/app/coach', headline: 'Create a coach workspace for rosters, reports, and player plans.' },
-  { id: 'invited-coach', label: 'Coach invite', path: '/app/coach', headline: 'Accept your organization invite and skip individual plan selection.' },
+  { id: 'coach', label: 'Coach', path: '/app/dashboard', headline: 'Create a coach workspace for rosters, reports, teams, IDPs, and session plans.' },
+  { id: 'player', label: 'Player', path: '/app/dashboard', headline: 'Train smarter, track development, and keep every next step clear.' },
+  { id: 'parent', label: 'Parent', path: '/app/dashboard', headline: 'Follow your player, manage billing, and stay connected to the plan.' },
+  { id: 'director', label: 'Director', path: '/app/dashboard', headline: 'Oversee teams, staff, reports, and academy-wide development systems.' },
+  { id: 'staff', label: 'Staff', path: '/app/dashboard', headline: 'Join the club workspace and support every player pathway.' },
+  { id: 'invited-coach', label: 'Organization invite', path: '/app/dashboard', headline: 'Accept your organization invite and skip pricing selection.' },
 ];
 
 const playerParentPlans = [
-  { id: 'starter', name: 'Starter', audience: 'Parent / Player', price: '$19', cadence: '/mo', description: 'Profile, training workspace, and monthly progress reporting.' },
-  { id: 'pro', name: 'Pro', audience: 'Parent / Player', price: '$49', cadence: '/mo', description: 'Adds development plan tools, film notes, and recruiting CRM.' },
-  { id: 'elite', name: 'Elite', audience: 'Parent / Player', price: '$99', cadence: '/mo', description: 'Coach-supported pathway with expanded parent reporting.' },
+  { id: 'starter', name: 'Starter', audience: 'Parent / Player', price: '$9', cadence: '/mo', description: 'Profile, parent visibility, and shared calendar access.' },
+  { id: 'player', name: 'Player', audience: 'Parent / Player', price: '$29', cadence: '/mo', description: 'KPI tracking, session notes, reports, and IDP access.' },
+  { id: 'family', name: 'Family', audience: 'Parent / Player', price: '$59', cadence: '/mo', description: 'Multi-player household, parent controls, and messaging.' },
+  { id: 'family-plus', name: 'Family Plus', audience: 'Parent / Player', price: '$89', cadence: '/mo', description: 'Expanded family support and priority player review workflow.' },
 ];
 
 const organizationPlans = [
-  { id: 'team', name: 'Team', audience: 'Organization', price: '$299', cadence: '/mo', description: 'One team workspace with player plans and coach reporting.' },
-  { id: 'club', name: 'Club', audience: 'Organization', price: '$799', cadence: '/mo', description: 'Multi-team oversight, staff seats, and pathway dashboards.' },
-  { id: 'academy', name: 'Academy', audience: 'Organization', price: 'Custom', cadence: '', description: 'Advanced license support for academies and larger programs.' },
+  { id: 'starter', name: 'Starter', audience: 'Coach / Organization', price: '$29', cadence: '/mo', description: 'Individual coach workspace with rosters and session planning.' },
+  { id: 'team', name: 'Team', audience: 'Coach / Organization', price: '$79', cadence: '/mo', description: 'One team, staff invites, reports, and parent/player portals.' },
+  { id: 'academy', name: 'Academy', audience: 'Coach / Organization', price: '$199', cadence: '/mo', description: 'Multi-team pathway, director oversight, and shared templates.' },
+  { id: 'organization', name: 'Organization', audience: 'Coach / Organization', price: '$499', cadence: '/mo', description: 'Club-wide operations, analytics, invites, and support.' },
 ];
 
 function FieldIcon({ children }) {
@@ -135,7 +139,7 @@ function BillingCard({ plan }) {
 }
 
 function SubscriptionModal({ flow, onClose, onContinue }) {
-  const isCoach = flow === 'coach';
+  const isCoach = ['coach', 'director', 'staff'].includes(flow);
   const plans = isCoach ? organizationPlans : playerParentPlans;
 
   return <div className="relative flex min-h-screen items-center justify-center bg-black auth-modal" role="dialog" aria-modal="true" aria-label="Subscription and license">
@@ -156,7 +160,7 @@ function SubscriptionModal({ flow, onClose, onContinue }) {
 
 export default function Login({ initialMode = 'login' }) {
   const [mode, setMode] = useState(initialMode);
-  const [flow, setFlow] = useState('player');
+  const [flow, setFlow] = useState('coach');
   const [showVerify, setShowVerify] = useState(false);
   const [showBilling, setShowBilling] = useState(false);
   const navigate = useNavigate();
@@ -208,6 +212,8 @@ export default function Login({ initialMode = 'login' }) {
             {isSignup && <AuthInput id="full-name" icon="◎" label="Full name" type="text" placeholder="Jordan Rivera" required />}
             <AuthInput id="email" icon="✉" label="Email address" type="email" placeholder="you@prohub.com" required />
             <AuthInput id="password" icon="◐" label="Password" type="password" placeholder="••••••••" required />
+            {isSignup && <div className="two-grid"><label className="prohub-field"><span>Workspace type</span><select><option>Organization</option><option>Individual</option></select></label><label className="prohub-field"><span>Player age check</span><select><option>18 or older / not a player</option><option>Under 18 — parent control required</option></select></label></div>}
+            <div className="social-auth-row"><button type="button" className="outline-prohub-button">Continue with Google</button><button type="button" className="outline-prohub-button">Continue with Apple</button></div>
             {isInvitedCoach && <AuthInput id="invite" icon="⌁" label="Organization invite code" type="text" placeholder="PROHUB-COACH-INVITE" required />}
             <div className="auth-options-row">
               <label className="check"><input type="checkbox" /> <span>Remember me</span></label>
@@ -217,7 +223,7 @@ export default function Login({ initialMode = 'login' }) {
             {!isSignup && <button className="outline-prohub-button" type="button" onClick={() => setMode('signup')}>Create account</button>}
           </form>
 
-          {isSignup && isInvitedCoach && <div className="invite-note">Coach invited by an organization will not see pricing tiers.</div>}
+          {isSignup && isInvitedCoach && <div className="invite-note">Users invited by an organization skip pricing and go straight to the ProHub workspace.</div>}
         </div>
       </section>
     </div>

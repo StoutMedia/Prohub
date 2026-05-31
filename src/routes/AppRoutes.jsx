@@ -5,16 +5,7 @@ import Login from '../pages/auth/Login.jsx';
 import Register from '../pages/auth/Register.jsx';
 import ForgotPassword from '../pages/auth/ForgotPassword.jsx';
 import DashboardLayout from '../components/layout/DashboardLayout.jsx';
-import PlayerDashboard from '../pages/dashboards/PlayerDashboard.jsx';
-import ParentDashboard from '../pages/dashboards/ParentDashboard.jsx';
-import CoachDashboard from '../pages/dashboards/CoachDashboard.jsx';
-import AdminDashboard from '../pages/dashboards/AdminDashboard.jsx';
-import DevelopmentPlan from '../pages/player/DevelopmentPlan.jsx';
-import TrainingPlan from '../pages/player/TrainingPlan.jsx';
-import Recruiting from '../pages/player/Recruiting.jsx';
-import Profile from '../pages/player/Profile.jsx';
-import Reports from '../pages/player/Reports.jsx';
-import Settings from '../pages/player/Settings.jsx';
+import { Dashboard, IDPs, InviteUser, PlayerProfile, Players, PricingSelection, ReportsCalendarMessages, Sessions, Settings, Teams, WorkspaceSetup } from '../pages/prohub/MVPPages.jsx';
 
 export default function AppRoutes() {
   return <Routes>
@@ -24,19 +15,28 @@ export default function AppRoutes() {
     <Route path="/register" element={<Register />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
     <Route path="/app" element={<DashboardLayout />}>
-      <Route index element={<Navigate to="player" replace />} />
-      <Route path="player" element={<PlayerDashboard />} />
-      <Route path="parent" element={<ParentDashboard />} />
-      <Route path="coach" element={<CoachDashboard />} />
-      <Route path="admin" element={<AdminDashboard />} />
-      <Route path="director" element={<Navigate to="../admin" replace />} />
-      <Route path="recruiter" element={<Navigate to="../admin" replace />} />
-      <Route path="development-plan" element={<DevelopmentPlan />} />
-      <Route path="training" element={<TrainingPlan />} />
-      <Route path="recruiting" element={<Recruiting />} />
-      <Route path="reports" element={<Reports />} />
-      <Route path="profile" element={<Profile />} />
+      <Route index element={<Navigate to="dashboard" replace />} />
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="teams" element={<Teams />} />
+      <Route path="players" element={<Players />} />
+      <Route path="players/:id" element={<PlayerProfile />} />
+      <Route path="sessions" element={<Sessions />} />
+      <Route path="idps" element={<IDPs />} />
+      <Route path="reports" element={<ReportsCalendarMessages type="Reports" />} />
+      <Route path="calendar" element={<ReportsCalendarMessages type="Calendar" />} />
+      <Route path="messages" element={<ReportsCalendarMessages type="Messages" />} />
       <Route path="settings" element={<Settings />} />
+      <Route path="onboarding" element={<WorkspaceSetup />} />
+      <Route path="pricing" element={<PricingSelection />} />
+      <Route path="invite" element={<InviteUser />} />
+      <Route path="player" element={<Navigate to="../dashboard" replace />} />
+      <Route path="parent" element={<Navigate to="../dashboard" replace />} />
+      <Route path="coach" element={<Navigate to="../dashboard" replace />} />
+      <Route path="admin" element={<Navigate to="../dashboard" replace />} />
+      <Route path="training" element={<Navigate to="../sessions" replace />} />
+      <Route path="development-plan" element={<Navigate to="../idps" replace />} />
+      <Route path="profile" element={<Navigate to="../players/1" replace />} />
+      <Route path="recruiting" element={<Navigate to="../reports" replace />} />
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>;

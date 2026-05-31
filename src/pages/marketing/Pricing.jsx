@@ -2,7 +2,11 @@ import Header from '../../components/layout/Header.jsx';
 import Footer from '../../components/layout/Footer.jsx';
 import Card from '../../components/ui/Card.jsx';
 import Button from '../../components/ui/Button.jsx';
-import { pricingPlans } from '../../data/pisaData.js';
-import { createCheckoutSessionPlaceholder } from '../../services/payments.js';
+import { coachOrgPlans, parentPlayerPlans } from '../../data/prohubData.js';
 
-export default function Pricing(){return <><Header/><main><section className="page-hero section-pad"><p className="eyebrow">Pricing + Stripe checkout placeholders</p><h1>Simple plans for every stage of the soccer pathway.</h1><p>Monthly subscriptions and the one-time Accelerator package are prepared for a backend Stripe Checkout Session endpoint.</p></section><section className="section-pad card-grid four-grid">{pricingPlans.map((plan)=>{const checkout = createCheckoutSessionPlaceholder(plan);return <Card className="pricing-card" key={plan.id}><p className="eyebrow">{plan.audience}</p><h2>{plan.name}</h2><strong className="price">{plan.price}<span>{plan.cadence}</span></strong><ul>{plan.features.map(item=><li key={item}>{item}</li>)}</ul><Button to="/login">Select {plan.name}</Button><small className="checkout-note">Stripe mode: {checkout.mode} • {checkout.stripePriceId}</small></Card>})}</section></main><Footer/></>}
+const groups = [
+  ['Parent / Player', parentPlayerPlans],
+  ['Coach / Director / Staff', coachOrgPlans],
+];
+
+export default function Pricing(){return <><Header/><main><section className="page-hero section-pad"><p className="eyebrow">ProHub pricing</p><h1>Simple plans for players, families, coaches, and organizations.</h1><p>Pricing selection is role-aware during onboarding. Organization invite links skip pricing and connect users directly to the invited workspace.</p></section>{groups.map(([title, plans]) => <section className="section-pad" key={title}><div className="page-hero"><p className="eyebrow">{title}</p><h2>{title} plans</h2></div><div className="card-grid four-grid">{plans.map((plan)=><Card className="pricing-card" key={plan.name}><p className="eyebrow">{title}</p><h2>{plan.name}</h2><strong className="price">{plan.price}<span>/mo</span></strong><p>{plan.note}</p><Button to="/register">Select {plan.name}</Button></Card>)}</div></section>)}</main><Footer/></>}
