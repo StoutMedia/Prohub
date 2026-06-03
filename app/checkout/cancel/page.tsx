@@ -1,0 +1,2 @@
+import { ButtonLink } from '@/components/ui/Button';
+export default function CheckoutCancelPage() { return <main className="flex min-h-screen items-center justify-center px-4"><div className="card max-w-lg rounded-3xl p-8 text-center"><h1 className="text-3xl font-black text-[#0B2751]">Checkout canceled</h1><p className="mt-3 text-slate-600">No payment was made. Choose a plan when you are ready.</p><div className="mt-6"><ButtonLink href="/onboarding/pricing">Choose Plan</ButtonLink></div></div></main>; }

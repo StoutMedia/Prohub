@@ -1,0 +1,3 @@
+import { DashboardCard } from '@/components/dashboard/DashboardCard';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
+export default async function SettingsPage() { const supabase = await createSupabaseServerClient(); const { data: { user } } = await supabase.auth.getUser(); const { data: profile } = await supabase.from('profiles').select('*').eq('id', user?.id || '').maybeSingle(); return <div><h1 className="text-4xl font-black text-[#0B2751]">Settings</h1><div className="mt-8"><DashboardCard title="Profile"><pre className="overflow-auto text-xs">{JSON.stringify(profile, null, 2)}</pre></DashboardCard></div></div>; }

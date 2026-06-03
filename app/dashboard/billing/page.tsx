@@ -1,0 +1,5 @@
+'use client';
+import { useState } from 'react';
+import { PlanCards } from '@/components/pricing/PlanCards';
+import { Button } from '@/components/ui/Button';
+export default function BillingPage() { const [loading,setLoading]=useState(false); const [error,setError]=useState(''); async function portal(){ setLoading(true); const res=await fetch('/api/stripe/create-portal-session',{method:'POST'}); const data=await res.json(); setLoading(false); if(!res.ok) return setError(data.error); window.location.href=data.url; } return <div><h1 className="text-4xl font-black text-[#0B2751]">Billing</h1><p className="mt-2 text-slate-600">Subscribe or manage billing. Users without active subscriptions or active organization coverage are blocked from paid dashboards by middleware.</p>{error&&<p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}<div className="mt-6"><Button onClick={portal} disabled={loading}>{loading?'Loading...':'Open Customer Portal'}</Button></div><div className="mt-8"><PlanCards audience="individual" /></div></div>; }

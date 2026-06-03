@@ -1,0 +1,1 @@
+export function DashboardCard({ title, children }: { title: string; children: React.ReactNode }) { return <article className="card rounded-3xl p-6"><h2 className="text-xl font-black text-[#0B2751]">{title}</h2><div className="mt-4 text-slate-600">{children}</div></article>; }
