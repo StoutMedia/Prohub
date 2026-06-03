@@ -1,154 +1,172 @@
 # ProHub by PISA
 
-ProHub by PISA is a Next.js App Router soccer operating system for Protouch International Soccer Academy. It includes Supabase authentication, role-based onboarding, organization invites, Stripe subscriptions, webhook-driven entitlement updates, and protected dashboards.
+ProHub by PISA is a production-ready Next.js App Router SaaS foundation for a premium soccer operating system powered by PISA / Protouch International Soccer Academy. It includes Supabase authentication, email verification, role-based onboarding, parent/player and organization flows, invite acceptance, Stripe Checkout, Stripe Customer Portal, webhook-backed subscription entitlements, and protected role dashboards.
 
-## Brand
+## 1. Install dependencies
 
-- Product: **ProHub by PISA**
-- Parent brand: **Protouch International Soccer Academy**
-- Website: `pisafootball.com`
-- Colors: navy `#0B2751`, orange `#E47410`, white `#FFFFFF`, black `#000000`
+```bash
+npm install
+npm run dev
+```
 
-## Stack
+## 2. Create a Supabase project
 
-- Next.js App Router + TypeScript
-- Tailwind CSS v4
-- Supabase Auth + Supabase Postgres
-- Stripe Checkout, Customer Portal, and webhooks
-- Resend-ready environment variables for transactional email
-- Vercel-ready deployment
+1. Create a new project at Supabase.
+2. Copy the Project URL into `NEXT_PUBLIC_SUPABASE_URL`.
+3. Copy the anon public key into `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+4. Copy the service role key into `SUPABASE_SERVICE_ROLE_KEY` for server-only API routes and webhooks. Never expose this key to client code.
 
-## Implemented routes
+## 3. Run SQL migration
 
-### Public/auth
+Run `supabase/migrations/001_initial_schema.sql` in the Supabase SQL editor, or install the Supabase CLI and run:
 
-- `/`
-- `/prohub`
-- `/login`
-- `/signup`
-- `/verify-email`
-- `/reset-password`
-- `/auth/callback`
-- `/pricing`
-- `/checkout/success`
-- `/checkout/cancel`
+```bash
+supabase link --project-ref YOUR_PROJECT_REF
+supabase db push
+```
 
-### Onboarding
+The migration enables `pgcrypto`, creates `profiles`, `organizations`, `organization_members`, `players`, `teams`, `subscriptions`, and `invites`, enables RLS on every table, adds ownership/member policies, and creates a trigger to make a profile when a Supabase Auth user is created.
 
-- `/onboarding/role`
-- `/onboarding/workspace`
-- `/onboarding/profile`
-- `/onboarding/player-parent`
-- `/onboarding/club-team`
-- `/onboarding/pricing`
-- `/onboarding/invite-users`
-- `/onboarding/complete`
+## 4. Enable Supabase email/password auth
 
-### Protected app
+1. In Supabase, open **Authentication → Providers → Email**.
+2. Enable Email provider.
+3. Enable email confirmations for production.
+4. Configure email templates to link back to `/auth/callback`.
 
-- `/dashboard`
-- `/dashboard/player`
-- `/dashboard/parent`
-- `/dashboard/coach`
-- `/dashboard/director`
-- `/dashboard/settings`
-- `/dashboard/billing`
+## 5. Enable Google OAuth
 
-### API
+1. Create OAuth credentials in Google Cloud.
+2. Add the Supabase callback URL shown in Supabase Auth provider settings to Google.
+3. In Supabase, open **Authentication → Providers → Google** and paste the client ID and secret.
+4. Google sign-in redirects through `/auth/callback` and then into onboarding/dashboard.
 
-- `/api/stripe/create-checkout-session`
-- `/api/stripe/create-portal-session`
-- `/api/stripe/webhook`
-- `/api/invites/create`
-- `/api/invites/accept`
-- `/api/onboarding/save-step`
+## 6. Enable Apple OAuth
 
-## Local setup
+1. Create an Apple Services ID and private key in Apple Developer.
+2. Add the Supabase Apple callback URL in Apple Developer.
+3. Enable Apple in Supabase Auth and enter the Apple credentials.
+4. Set `NEXT_PUBLIC_ENABLE_APPLE_OAUTH=true` in the app environment. Until that flag is set, the Apple button is disabled with an inline configuration message.
 
-1. Install dependencies:
+## 7. Required Supabase redirect URLs
 
-   ```bash
-   npm install
-   ```
+Add these redirect URLs in Supabase Authentication URL configuration:
 
-2. Copy `.env.example` to `.env.local` and fill values:
+- `http://localhost:3000/auth/callback`
+- `https://app.pisafootball.com/auth/callback`
 
-   ```bash
-   cp .env.example .env.local
-   ```
+## 8. Create Stripe products/prices
 
-3. Create a Supabase project and enable Auth providers:
+Create recurring monthly Stripe prices for:
 
-   - Email/password auth
-   - Email confirmation
-   - Google OAuth provider
-   - Apple OAuth provider if you have Apple developer credentials, have enabled Apple in Supabase, and set `NEXT_PUBLIC_ENABLE_APPLE_OAUTH=true`
+- Starter — `$9/mo`
+- Player — `$29/mo`
+- Family — `$59/mo`
+- Family Plus — `$89/mo`
+- Coach plan
+- Organization plan
 
-4. Run the SQL migration in Supabase SQL editor or with Supabase CLI:
+## 9. Add Stripe price IDs
 
-   ```bash
-   supabase db push
-   ```
+Copy the Stripe recurring price IDs into `.env.local`:
 
-   Migration file: `supabase/migrations/20260603000000_prohub_auth_onboarding_subscriptions.sql`.
+```bash
+STRIPE_PRICE_STARTER=price_...
+STRIPE_PRICE_PLAYER=price_...
+STRIPE_PRICE_FAMILY=price_...
+STRIPE_PRICE_FAMILY_PLUS=price_...
+STRIPE_PRICE_COACH=price_...
+STRIPE_PRICE_ORGANIZATION=price_...
+```
 
-5. Create Stripe recurring prices and add the price IDs to `.env.local`:
+Also set `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, and `STRIPE_WEBHOOK_SECRET`.
 
-   - `STRIPE_PRICE_STARTER` for Starter `$9/mo`
-   - `STRIPE_PRICE_PLAYER` for Player `$29/mo`
-   - `STRIPE_PRICE_FAMILY` for Family `$59/mo`
-   - `STRIPE_PRICE_FAMILY_PLUS` for Family Plus `$89/mo`
-   - `STRIPE_PRICE_COACH`
-   - `STRIPE_PRICE_ORGANIZATION`
+## 10. Test Stripe Checkout locally
 
-6. Configure Stripe webhook endpoint:
+1. Start the app with `npm run dev`.
+2. Sign up, verify email, complete onboarding through pricing.
+3. Click a pricing card.
+4. Use Stripe test card `4242 4242 4242 4242` with any future expiration and CVC.
+5. Confirm redirect to `/checkout/success`.
 
-   ```text
-   https://your-domain.com/api/stripe/webhook
-   ```
+## 11. Test Stripe webhooks locally
 
-   Subscribe to these events:
+Install the Stripe CLI, log in, and forward events:
 
-   - `checkout.session.completed`
-   - `customer.subscription.created`
-   - `customer.subscription.updated`
-   - `customer.subscription.deleted`
-   - `invoice.payment_succeeded`
-   - `invoice.payment_failed`
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
 
-7. Start development server:
+Copy the printed signing secret into `STRIPE_WEBHOOK_SECRET`, then complete a test checkout. The webhook handles:
 
-   ```bash
-   npm run dev
-   ```
+- `checkout.session.completed`
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+- `invoice.payment_succeeded`
+- `invoice.payment_failed`
 
-## Access rules
+## 12. Deploy to Vercel
 
-- Logged-out users are redirected to `/login` for protected pages.
-- Authenticated users who have not completed onboarding are redirected to `/onboarding/role` before dashboard access.
-- Paid dashboard routes are blocked unless the user has an active/trialing subscription or an active organization membership.
-- Billing remains available at `/dashboard/billing` so unpaid users can subscribe.
-- Organization invite acceptance creates an active membership and sets `workspace_type = 'invite'`, allowing invited coaches/staff to skip public pricing.
+1. Push the repository to GitHub.
+2. Import it into Vercel.
+3. Set the framework preset to Next.js.
+4. Add all production environment variables.
+5. Deploy.
 
-## Test checklist
+## 13. Add production environment variables
 
-- [ ] New user can sign up with email/password.
-- [ ] New user receives Supabase email verification.
-- [ ] User can log in and log out.
-- [ ] User can request a password reset email.
-- [ ] Google OAuth redirects through `/auth/callback` and creates a profile.
-- [ ] Apple OAuth works when configured in Supabase; otherwise provider setup is required.
-- [ ] User can complete role, workspace, profile, and player/club onboarding steps.
-- [ ] Parent/player pricing shows Starter `$9/mo`, Player `$29/mo`, Family `$59/mo`, and Family Plus `$89/mo`.
-- [ ] Invited coach accepts invite and skips pricing.
-- [ ] Stripe Checkout starts for configured price IDs.
-- [ ] Stripe webhook verifies the signature and updates `subscriptions`.
-- [ ] Paid or invited user reaches role dashboard.
-- [ ] Unpaid user is redirected to `/dashboard/billing`.
-- [ ] Pages are usable on mobile, tablet, and desktop.
-- [ ] `npm run typecheck` has no TypeScript errors.
-- [ ] `npm run build` completes without console/build errors.
+Use `.env.example` as the source of truth. Required variables:
 
-## Notes
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `STRIPE_SECRET_KEY`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `STRIPE_PRICE_STARTER`
+- `STRIPE_PRICE_PLAYER`
+- `STRIPE_PRICE_FAMILY`
+- `STRIPE_PRICE_FAMILY_PLUS`
+- `STRIPE_PRICE_COACH`
+- `STRIPE_PRICE_ORGANIZATION`
+- `EMAIL_FROM`
+- optional `NEXT_PUBLIC_ENABLE_APPLE_OAUTH=true`
 
-OAuth buttons call Supabase directly. If a provider is not enabled in Supabase, Supabase will return a provider configuration error; configure that provider before using it in production.
+## 14. QA checklist
+
+- [ ] Email/password sign up creates a Supabase user and profile.
+- [ ] Supabase sends email verification.
+- [ ] `/auth/callback` exchanges the code and redirects to onboarding.
+- [ ] Login and logout work.
+- [ ] Password reset request and update password flow work.
+- [ ] Google OAuth works when configured.
+- [ ] Apple OAuth works only when configured; otherwise the button is disabled with a clear message.
+- [ ] User can select Coach, Player, Parent, or Director/Staff.
+- [ ] User can select Individual, Organization, I received an invite, or PISA Player.
+- [ ] User can complete profile setup.
+- [ ] Parent/player users can save player details and minor/parent-email requirements.
+- [ ] Organization users can create organization/team setup.
+- [ ] Parent/player pricing shows Starter, Player, Family, and Family Plus plans.
+- [ ] Stripe Checkout opens for configured plan price IDs.
+- [ ] Stripe webhook verifies signatures and updates `subscriptions`.
+- [ ] Organization plans update organization subscription status.
+- [ ] Invite creation returns a secure expiring invite link.
+- [ ] Invite acceptance creates membership and skips public pricing for invited users.
+- [ ] Paid users reach the correct role dashboard.
+- [ ] Unpaid users are redirected to `/dashboard/billing`.
+- [ ] Billing portal opens for users with a Stripe customer.
+- [ ] Mobile auth, verification, onboarding, pricing, and dashboard layouts remain usable.
+- [ ] `npm run lint` passes.
+- [ ] `npm run build` passes.
+
+## Built routes
+
+Public: `/`, `/prohub`, `/login`, `/signup`, `/verify-email`, `/reset-password`, `/auth/callback`, `/pricing`, `/checkout/success`, `/checkout/cancel`.
+
+Onboarding: `/onboarding/role`, `/onboarding/workspace`, `/onboarding/profile`, `/onboarding/player-parent`, `/onboarding/club-team`, `/onboarding/pricing`, `/onboarding/invite-users`, `/onboarding/complete`.
+
+Protected dashboard: `/dashboard`, `/dashboard/player`, `/dashboard/parent`, `/dashboard/coach`, `/dashboard/director`, `/dashboard/settings`, `/dashboard/billing`.
+
+API: `/api/stripe/create-checkout-session`, `/api/stripe/create-portal-session`, `/api/stripe/webhook`, `/api/invites/create`, `/api/invites/accept`, `/api/onboarding/save-step`.

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { createSupabaseAdminClient, createSupabaseServerClient } from '@/lib/supabase/server';
 import { siteUrl } from '@/lib/site';
 
 async function acceptInvite(token: string | null) {
@@ -7,11 +7,12 @@ async function acceptInvite(token: string | null) {
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.redirect(`${siteUrl()}/login?invite=${token}`);
-  const { data: invite } = await supabase.from('invites').select('*').eq('token', token).eq('accepted', false).gt('expires_at', new Date().toISOString()).maybeSingle();
+  const admin = createSupabaseAdminClient();
+  const { data: invite } = await admin.from('invites').select('*').eq('token', token).eq('accepted', false).gt('expires_at', new Date().toISOString()).maybeSingle();
   if (!invite) return NextResponse.redirect(`${siteUrl()}/onboarding/pricing?error=invalid_invite`);
-  await supabase.from('organization_members').upsert({ organization_id: invite.organization_id, user_id: user.id, role: invite.role, status: 'active' }, { onConflict: 'organization_id,user_id' });
-  await supabase.from('profiles').upsert({ id: user.id, email: user.email, role: invite.role, workspace_type: 'invite', updated_at: new Date().toISOString() }, { onConflict: 'id' });
-  await supabase.from('invites').update({ accepted: true }).eq('id', invite.id);
+  await admin.from('organization_members').upsert({ organization_id: invite.organization_id, user_id: user.id, role: invite.role, status: 'active' }, { onConflict: 'organization_id,user_id' });
+  await admin.from('profiles').upsert({ id: user.id, email: user.email, role: invite.role, workspace_type: 'invite', onboarding_step: 'pricing', updated_at: new Date().toISOString() }, { onConflict: 'id' });
+  await admin.from('invites').update({ accepted: true }).eq('id', invite.id);
   return NextResponse.redirect(`${siteUrl()}/onboarding/complete`);
 }
 
