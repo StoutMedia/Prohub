@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
-import { stripe } from '@/lib/stripe/client';
+import { stripe } from '@/lib/stripe';
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
-async function upsertSubscription(subscription: Stripe.Subscription, fallbackUserId?: string | null, fallbackPlanName?: string | null) {
+async function upsertSubscription(subscription: Stripe.Subscription, fallbackUserId?: string | null, fallbackPlanName?: string | null, fallbackOrganizationId?: string | null) {
   const supabase = createSupabaseAdminClient();
   const item = subscription.items.data[0];
   const userId = subscription.metadata.user_id || fallbackUserId;
+  const organizationId = subscription.metadata.organization_id || fallbackOrganizationId || null;
   if (!userId) return;
-  await supabase.from('subscriptions').upsert({
+  const record = {
     user_id: userId,
+    organization_id: organizationId || null,
     stripe_customer_id: String(subscription.customer),
     stripe_subscription_id: subscription.id,
     stripe_price_id: item?.price.id,
@@ -19,7 +21,11 @@ async function upsertSubscription(subscription: Stripe.Subscription, fallbackUse
     status: subscription.status,
     current_period_end: new Date((subscription as any).current_period_end * 1000).toISOString(),
     updated_at: new Date().toISOString(),
-  }, { onConflict: 'stripe_subscription_id' });
+  };
+  await supabase.from('subscriptions').upsert(record, { onConflict: 'stripe_subscription_id' });
+  if (organizationId) {
+    await supabase.from('organizations').update({ stripe_customer_id: String(subscription.customer), subscription_status: subscription.status, subscription_plan: record.plan_name, updated_at: new Date().toISOString() }).eq('id', organizationId);
+  }
 }
 
 export async function POST(request: Request) {
@@ -33,7 +39,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Checkout.Session;
     if (session.subscription) {
       const subscription = await stripe().subscriptions.retrieve(String(session.subscription));
-      await upsertSubscription(subscription, session.metadata?.user_id, session.metadata?.plan_name);
+      await upsertSubscription(subscription, session.metadata?.user_id, session.metadata?.plan_name, session.metadata?.organization_id);
     }
   }
   if (['customer.subscription.created', 'customer.subscription.updated', 'customer.subscription.deleted'].includes(event.type)) await upsertSubscription(event.data.object as Stripe.Subscription);
