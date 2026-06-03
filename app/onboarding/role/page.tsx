@@ -1,0 +1,3 @@
+import { OnboardingProgress } from '@/components/onboarding/Progress';
+import { ChoiceStep } from '@/components/onboarding/StepForm';
+export default function RolePage() { return <><OnboardingProgress current={1} /><ChoiceStep field="role" next="/onboarding/workspace" title="Choose your role" subtitle="ProHub configures onboarding and dashboard access by role." options={[{ label:'Coach', value:'coach', description:'Plan sessions and manage player feedback.' },{ label:'Player', value:'player', description:'Track development, training, reports, and recruiting.' },{ label:'Parent', value:'parent', description:'Manage child player profiles and family billing.' },{ label:'Director/Staff', value:'director', description:'Operate academy, teams, staff, and invites.' }]} /></>; }
